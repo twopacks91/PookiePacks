@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-// MAKE MY SLOP CODE WORK FOR MULTIPLE ROWS PLEASE X
-
 public class LoadInventory : MonoBehaviour
 {
     [SerializeField]
@@ -114,7 +112,8 @@ public class LoadInventory : MonoBehaviour
 
 
         // Change button text and colour based on if item is equipped
-        bool isEquipped = false;
+        bool isEquipped = true;
+        
         if(isEquipped)
         {
             equipButton.GetComponent<Image>().color = Color.red;
