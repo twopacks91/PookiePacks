@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,12 +13,11 @@ public class LoadInventory : MonoBehaviour
     private Canvas itemCardPrefab;      // Prefab for each item card
 
     [SerializeField]
-    private Canvas itemViewerCanvas;
+    private Canvas itemViewerCanvas;    // Canvas to switch to when item pressed
 
     private int itemCount = 10;         // Should be equal to the number of items owned by the player
-    private Canvas[] inventorySlots = new Canvas[10]; // Stores all the item cards, size should be equal to itemCount
+    private List<Canvas> inventorySlots = new List<Canvas>(0); // Stores all the item cards
 
-     // Should change dynamically based on screen size maybe idk im guessing this whole thing
     void Start()
     {
         int padding = 50; // Space between cards
@@ -47,7 +47,6 @@ public class LoadInventory : MonoBehaviour
 
         for(int i=0;i<itemCount;i++)
         {
-            
             // Create new canvas gameobject from item view prefab and add to InventoryCanvas as child
             Canvas itemCanvas = Instantiate(itemCardPrefab,itemContainer);     
 
@@ -86,8 +85,8 @@ public class LoadInventory : MonoBehaviour
                 itemCanvas.transform.localPosition = new Vector2((padding+canvasWidth)/2,-padding-(canvasHeight/2)-(row*(canvasHeight+padding))+newHeight/2);
             }
             
-            // Add each instantiated prefab to array
-            inventorySlots[i] = itemCanvas;
+            // Add each instantiated prefab to list
+            inventorySlots.Add(itemCanvas);
             
         }
         
@@ -103,9 +102,11 @@ public class LoadInventory : MonoBehaviour
         Button equipButton = itemViewerCanvas.GetComponentsInChildren<Button>()[0];
 
         // Code to be used as such:
-        // itemImage.texture = (array containing all the items owned by player)[itemIndex].image
-        // All children updated in the same way
+        // itemImage.texture = (array containing all the items owned by player)[itemIndex].GetImage();
+        // All children above updated in the same way
         
+
+        // PLACEHOLDER VALUES
         itemImage.texture = defaultTexture;
         itemNameText.text = "Wild Warwick";
         itemDescriptionText.text = "+10 Damage\n+20 Attack Speed\n-30 Height";

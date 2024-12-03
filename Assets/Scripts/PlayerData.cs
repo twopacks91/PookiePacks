@@ -9,12 +9,15 @@ public class PlayerData
     private string mUsername;
     private string mPassword;
 
+    private List<Item> mInventory;
+
     //// *** Constructors - (uncommented for now UNTIL required - Hamza)
     //// Create and Save new player instance - only use in registering, otherwise data will be overwritten
     //public PlayerData(string username, string password)
     //{
     //    mUsername = username;
     //    mPassword = password;
+    //    mInventory = new List<Item>;
     //    this.SavePlayer();
     //}
     //// Default constructor - loads player using information stored
@@ -61,5 +64,6 @@ public class PlayerData
         // Load data into current state
         mUsername = data.mUsername;
         mPassword = data.mPassword;
+        mInventory = data.mInventory;
     }
 }
