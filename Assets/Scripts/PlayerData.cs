@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; 
 
 [System.Serializable]  // allows saving to a file
 public class PlayerData

@@ -215,6 +215,10 @@ public class LoginManager : MonoBehaviour
         SceneManager.LoadScene("Login");  // UPDATE - scene name / number in build settings
     }
 
+    public void GoToProfileScreen()
+    {
+        SceneManager.LoadScene("Profiler");  // UPDATE - scene name / number in build settings
+    } //Hamza is a fat ass
     /// <summary>
     /// Remove error when a user is typing since they're probably attempting to fix the error
     /// </summary>
