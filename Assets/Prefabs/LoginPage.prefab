@@ -1527,6 +1527,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usernameField: {fileID: 9179458294868238540}
   passwordField: {fileID: 8215884115103706967}
+  confirmPasswordField: {fileID: 0}
+  errorText: {fileID: 0}
 --- !u!1 &7393414690771094529
 GameObject:
   m_ObjectHideFlags: 0

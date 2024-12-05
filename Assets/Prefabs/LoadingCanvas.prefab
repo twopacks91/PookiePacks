@@ -318,7 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf13e99d510e3242be099476adf7ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HomeCanvas: {fileID: 0}
   fakeLoad: 1
 --- !u!1 &2738744672008829727
 GameObject:

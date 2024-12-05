@@ -94,7 +94,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: a48c68541fb3deb468415f55cdb6d1a6, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: a48c68541fb3deb468415f55cdb6d1a6,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1220,7 +1221,8 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 09fc8f01b8294d84f82028568c8def5f, type: 3}
 --- !u!4 &693656627 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 09fc8f01b8294d84f82028568c8def5f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 09fc8f01b8294d84f82028568c8def5f,
+    type: 3}
   m_PrefabInstance: {fileID: 693656626}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &699837372
@@ -1774,7 +1776,8 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: 2af8e89aefb14454bbd465e3488ea823, type: 3}
 --- !u!4 &829035117 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 400000, guid: 2af8e89aefb14454bbd465e3488ea823, type: 3}
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 2af8e89aefb14454bbd465e3488ea823,
+    type: 3}
   m_PrefabInstance: {fileID: 829035116}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &833876302
@@ -2303,7 +2306,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297194209}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000018942421, y: -0.0000000023889328, z: -0.27196598, w: 0.96230686}
+  m_LocalRotation: {x: -0.000000018942421, y: -0.0000000023889328, z: -0.27196598,
+    w: 0.96230686}
   m_LocalPosition: {x: -0.056144983, y: 0, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3467,7 +3471,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841155238}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000058450444, y: -0.000000013832913, z: -0.27196598, w: 0.96230686}
+  m_LocalRotation: {x: -0.0000000058450444, y: -0.000000013832913, z: -0.27196598,
+    w: 0.96230686}
   m_LocalPosition: {x: -0.040104, y: 0, z: 0}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
