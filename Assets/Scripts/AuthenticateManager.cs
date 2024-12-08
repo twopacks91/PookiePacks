@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using System.Text.RegularExpressions;
 
 public class LoginManager : MonoBehaviour
