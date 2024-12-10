@@ -1126,6 +1126,10 @@ MonoBehaviour:
   defaultTexture: {fileID: 2800000, guid: de272a86649bc6b409ba873f427b3bb8, type: 3}
   itemCardPrefab: {fileID: 3013830829957591826, guid: 6529268616b6039489eb3fcdbcacc138,
     type: 3}
+  itemTextures:
+  - {fileID: 2800000, guid: 234cacb7128190841a3a80b471a3a347, type: 3}
+  - {fileID: 2800000, guid: 43d23b7d92cb1574a97b0d07e4c0e66a, type: 3}
+  - {fileID: 2800000, guid: c495f9aa715e2bc458b8fd4d0296caf6, type: 3}
   itemViewerCanvas: {fileID: 1261544785}
 --- !u!114 &1131974370
 MonoBehaviour:
