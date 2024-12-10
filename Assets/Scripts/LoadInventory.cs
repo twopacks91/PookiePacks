@@ -11,6 +11,8 @@ public class LoadInventory : MonoBehaviour
     private Texture2D defaultTexture;    // Default texture for item pictures
     [SerializeField]
     private Canvas itemCardPrefab;      // Prefab for each item card
+    [SerializeField]
+    private List<Texture2D> itemTextures;
 
     [SerializeField]
     private Canvas itemViewerCanvas;    // Canvas to switch to when item pressed
@@ -21,9 +23,32 @@ public class LoadInventory : MonoBehaviour
 
     void Start()
     {
-        PlayerData playerData = new PlayerData();
-        characters = playerData.GetCharacters();
+        //PlayerData playerData = new PlayerData();
+        //characters = playerData.GetCharacters();
+        characters = new List<Character>(0);
+        List<string> attr = new List<string>(0)
+        {
+            "-1000 Aura",
+            "-100 Smell"
+        };
+        List<string> attr2 = new List<string>(0)
+        {
+            "-10 IQ",
+            "+100 Smell"
+        };
+        List<string> attr3 = new List<string>(0)
+        {
+            "+1 Height",
+            "-5000 Car"
+        };
+        Character c1 = new Character(itemTextures[0],"Muusman",attr);
+        Character c2 = new Character(itemTextures[1],"MTahir",attr2);
+        Character c3 = new Character(itemTextures[2],"Gwigg",attr3);
+        characters.Add(c1);
+        characters.Add(c2);
+        characters.Add(c3);
         int itemCount = characters.Count;
+        Debug.Log(itemCount);
 
         // If no characters are present, do nothing
         // We SHOULD indicate to the player their inventory is empty
@@ -50,6 +75,10 @@ public class LoadInventory : MonoBehaviour
             {
                 newHeight += padding+canvasHeight;
             }
+        }
+        else
+        {
+            newHeight = 1920;
         }
         itemContainer.sizeDelta = new Vector2(1080,newHeight);
         // Move container down after height change
@@ -114,6 +143,7 @@ public class LoadInventory : MonoBehaviour
 
         // itemImage.texture = characters[itemIndex].GetImage(); // FIX THIS FINNNNN
         itemNameText.text = characters[itemIndex].GetName();
+        itemDescriptionText.text = "";
         List<string> attributes = characters[itemIndex].GetAttributes();
         foreach(string s in attributes)
         {
