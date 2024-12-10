@@ -3,12 +3,12 @@ using UnityEngine;
 [System.Serializable]
 public class Item
 {
-    private Texture2D itemImage;
+    private string itemImage;
     private string itemName;
     private string[] itemAttributes;
     private bool isEquipped;
 
-    public Item(Texture2D image, string name, string[] attributes)
+    public Item(string image, string name, string[] attributes)
     {
         this.itemImage = image;
         this.itemName = name;
@@ -16,7 +16,7 @@ public class Item
         this.isEquipped = false;
     }
 
-    public Texture2D GetImage()
+    public string GetImage()
     {
         return itemImage;
     }

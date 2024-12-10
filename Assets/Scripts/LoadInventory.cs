@@ -67,7 +67,7 @@ public class LoadInventory : MonoBehaviour
 
             // Picture to display each item
             RawImage picture = itemCanvas.GetComponentsInChildren<RawImage>()[1];
-            picture.texture = characters[i].GetImage();
+            // picture.texture = characters[i].GetImage();  // FIX THIS FINNNNN
 
             // Text to contain item name and properties
             TMPro.TextMeshProUGUI itemName = itemCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
@@ -112,7 +112,7 @@ public class LoadInventory : MonoBehaviour
         TMPro.TextMeshProUGUI itemDescriptionText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
         Button equipButton = itemViewerCanvas.GetComponentsInChildren<Button>()[0];
 
-        itemImage.texture = characters[itemIndex].GetImage();
+        // itemImage.texture = characters[itemIndex].GetImage(); // FIX THIS FINNNNN
         itemNameText.text = characters[itemIndex].GetName();
         List<string> attributes = characters[itemIndex].GetAttributes();
         foreach(string s in attributes)

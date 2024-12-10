@@ -98,10 +98,13 @@ public class LoginManager : MonoBehaviour
             Debug.Log("Successful Register!");
 
             // Save Player Data
-            PlayerData player = new PlayerData();
-            player.SetUsername(username);
-            player.SetPassword(password);
+            PlayerData player = new PlayerData(username, password);
             player.SavePlayer();
+
+            // using default constructor - expect issues
+            //PlayerData player = new PlayerData();
+            //player.SetUsername(username);
+            //player.SetPassword(password);
 
             // Load Home Screen
             SceneManager.LoadScene("Home");
@@ -217,7 +220,8 @@ public class LoginManager : MonoBehaviour
     public void GoToProfileScreen()
     {
         SceneManager.LoadScene("Profiler");  // UPDATE - scene name / number in build settings
-    } //Hamza is a fat ass
+    }
+
     /// <summary>
     /// Remove error when a user is typing since they're probably attempting to fix the error
     /// </summary>

@@ -11,20 +11,19 @@ public class PlayerData
     private string mPassword;
 
     private List<Item> mItems;
-
     private List<Character> mCharacters;
 
-    //// *** Constructors - (uncommented for now UNTIL required - Hamza)
-    //// Create and Save new player instance - only use in registering, otherwise data will be overwritten
-    //public PlayerData(string username, string password)
-    //{
-    //    mUsername = username;
-    //    mPassword = password;
-    //    mItems = new List<Item>(0);
-    //    mCharacters = new List<Character>(0);
-    //    this.SavePlayer();
-    //}
-    //// Default constructor - loads player using information stored
+    // *** Constructors - (uncommented for now UNTIL required - UPDATE it is now required - Hamza)
+    // Create and Save new player instance - only use in registering, otherwise data will be overwritten
+    public PlayerData(string username, string password)
+    {
+        mUsername = username;
+        mPassword = password;
+        mItems = new List<Item>(0);
+        mCharacters = new List<Character>(0);
+        this.SavePlayer();
+    }
+    // Default constructor - loads player using information stored
     public PlayerData()
     {
         LoadPlayer();
@@ -49,9 +48,18 @@ public class PlayerData
         return mPassword;
     }
 
+    public void InsertItem(Item item)
+    {
+        mItems.Add(item);
+    }
     public List<Item> GetItems()
     {
         return mItems;
+    }
+
+    public void InsertCharacter(Character character)
+    {
+        mCharacters.Add(character);
     }
     public List<Character> GetCharacters()
     {
@@ -79,7 +87,16 @@ public class PlayerData
         mPassword = data.mPassword;
         mItems = data.mItems;
         mCharacters = data.mCharacters;
+
+        // When empty, initialise to prevent null exceptions
+        if (mCharacters == null)
+        {
+            mCharacters = new List<Character>();
+        }
+        if (mItems == null)
+        {
+            mItems = new List<Item>();
+        }
     }
 
-    
 }

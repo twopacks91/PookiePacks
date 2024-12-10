@@ -4,12 +4,12 @@ using UnityEngine;
 [System.Serializable]
 public class Character
 {
-    private Texture2D itemImage;
+    private string itemImage;  // image name
     private string itemName;
     private List<string> itemAttributes;
     private List<Item> equippedItems;
 
-    public Character(Texture2D image, string name, List<string> attributes)
+    public Character(string image, string name, List<string> attributes)
     {
         this.itemImage = image;
         this.itemName = name;
@@ -17,7 +17,7 @@ public class Character
         this.equippedItems = new List<Item>(0);
     }
 
-    public Texture2D GetImage()
+    public string GetImage()
     {
         return itemImage;
     }

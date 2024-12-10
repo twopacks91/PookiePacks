@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Summons : MonoBehaviour
 {
     // *** Variables
@@ -29,6 +30,8 @@ public class Summons : MonoBehaviour
     private RawImage backgroundImage;
     [SerializeField]
     List<Sprite> characterList;  // remove once character class exists
+    List<string> characterNames = new List<string> { "Mercenary", "Flamer",
+        "Space Soldier", "Crabby", "Bonkzilla", "Demon Girl" }; // static setup based on sprite entry currently
 
 
     // *** Functions
@@ -46,6 +49,9 @@ public class Summons : MonoBehaviour
 
         // Generate a character to display
         int characterNum = GenerateCharacter();
+
+        // Save character to user's inventory
+        SaveSummonToInventory(characterNum);
 
         // Show conclusion - this function accounts for animation time
         ShowConclusion(characterNum);
@@ -89,6 +95,34 @@ public class Summons : MonoBehaviour
     private void PlayLightningEffect()
     {
         lightningEffect.SetActive(true);
+    }
+
+
+    /// <summary>
+    /// Called in the process of summoning to save the character to the user's inventory
+    /// </summary>
+    /// <param name="characterNum"></param>
+    private void SaveSummonToInventory(int characterNum)
+    {
+        // Make instance of character and save it to current player 
+        Debug.Log("Character saved to inventory: " + characterNames[characterNum]);  // REMOVE
+
+        Character newChar = new Character(characterList[characterNum].texture.ToString(), characterNames[characterNum], 
+            new List<string> { "Snoop", "Doggy", "Dawg", "should have power values for character" });
+
+        Debug.Log("Made new character");  // REMOVE
+
+        PlayerData currentPlayer = new PlayerData();
+
+        Debug.Log("Made new player");  // REMOVE
+
+        currentPlayer.InsertCharacter(newChar);
+
+        Debug.Log("Inserted new character");  // REMOVE
+
+        currentPlayer.SavePlayer();
+
+        Debug.Log("SSUCCESS in saving to inventory");  // REMOVE
     }
 
     /// <summary>
