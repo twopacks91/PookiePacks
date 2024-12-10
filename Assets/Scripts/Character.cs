@@ -1,0 +1,39 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class Character
+{
+    private Texture2D itemImage;
+    private string itemName;
+    private string[] itemAttributes;
+    private List<Item> equippedItems;
+
+    public Character(Texture2D image, string name, string[] attributes)
+    {
+        this.itemImage = image;
+        this.itemName = name;
+        this.itemAttributes = attributes;
+        this.equippedItems = new List<Item>(0);
+    }
+
+    public Texture2D GetImage()
+    {
+        return itemImage;
+    }
+
+    public string GetName()
+    {
+        return itemName;
+    }
+
+    public string[] GetAttributes()
+    {
+        return itemAttributes;
+    }
+
+    public List<Item> GetEquippedItems()
+    {
+        return equippedItems;
+    }
+}

@@ -10,7 +10,9 @@ public class PlayerData
     private string mUsername;
     private string mPassword;
 
-    private List<Item> mInventory;
+    private List<Item> mItems;
+
+    private List<Character> mCharacters;
 
     //// *** Constructors - (uncommented for now UNTIL required - Hamza)
     //// Create and Save new player instance - only use in registering, otherwise data will be overwritten
@@ -18,7 +20,8 @@ public class PlayerData
     //{
     //    mUsername = username;
     //    mPassword = password;
-    //    mInventory = new List<Item>;
+    //    mItems = new List<Item>(0);
+    //    mCharacters = new List<Character>(0);
     //    this.SavePlayer();
     //}
     //// Default constructor - loads player using information stored
@@ -46,6 +49,15 @@ public class PlayerData
         return mPassword;
     }
 
+    public List<Item> GetItems()
+    {
+        return mItems;
+    }
+    public List<Character> GetCharacters()
+    {
+        return mCharacters;
+    }
+    
     // *** Functions
     /// <summary>
     /// Saves player data into file system using SavePlayer static function
@@ -65,6 +77,9 @@ public class PlayerData
         // Load data into current state
         mUsername = data.mUsername;
         mPassword = data.mPassword;
-        mInventory = data.mInventory;
+        mItems = data.mItems;
+        mCharacters = data.mCharacters;
     }
+
+    
 }
