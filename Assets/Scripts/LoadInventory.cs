@@ -15,11 +15,24 @@ public class LoadInventory : MonoBehaviour
     [SerializeField]
     private Canvas itemViewerCanvas;    // Canvas to switch to when item pressed
 
-    private int itemCount = 10;         // Should be equal to the number of items owned by the player
     private List<Canvas> inventorySlots = new List<Canvas>(0); // Stores all the item cards
+
+    private List<Character> characters;
 
     void Start()
     {
+        PlayerData playerData = new PlayerData();
+        characters = playerData.GetCharacters();
+        int itemCount = characters.Count;
+
+        // If no characters are present, do nothing
+        // We SHOULD indicate to the player their inventory is empty
+        // I am lazy
+        if(itemCount==0)
+        {
+            return;
+        }
+
         int padding = 50; // Space between cards
         int row = 0;
 
@@ -27,10 +40,7 @@ public class LoadInventory : MonoBehaviour
         float canvasHeight = itemCardPrefab.GetComponent<RectTransform>().rect.height;
         float canvasWidth = itemCardPrefab.GetComponent<RectTransform>().rect.width;
 
-        
         RectTransform itemContainer = (RectTransform)this.transform.Find("ItemContainer");
-
-
 
         // Resize the height of the item container acording to how many items are being displayed
         float newHeight=0.0f;
@@ -45,6 +55,7 @@ public class LoadInventory : MonoBehaviour
         // Move container down after height change
         itemContainer.localPosition = new Vector2(0,-newHeight/2);
 
+
         for(int i=0;i<itemCount;i++)
         {
             // Create new canvas gameobject from item view prefab and add to InventoryCanvas as child
@@ -56,11 +67,11 @@ public class LoadInventory : MonoBehaviour
 
             // Picture to display each item
             RawImage picture = itemCanvas.GetComponentsInChildren<RawImage>()[1];
-            picture.texture = defaultTexture;
+            picture.texture = characters[i].GetImage();
 
             // Text to contain item name and properties
             TMPro.TextMeshProUGUI itemName = itemCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
-            itemName.text = "Item " + i.ToString();
+            itemName.text = characters[i].GetName();
             itemName.color = Color.black;
 
             // Button covering canvas to determine weather item has been clicked
@@ -101,17 +112,14 @@ public class LoadInventory : MonoBehaviour
         TMPro.TextMeshProUGUI itemDescriptionText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
         Button equipButton = itemViewerCanvas.GetComponentsInChildren<Button>()[0];
 
-        // Code to be used as such:
-        // itemImage.texture = (array containing all the items owned by player)[itemIndex].GetImage();
-        // All children above updated in the same way
+        itemImage.texture = characters[itemIndex].GetImage();
+        itemNameText.text = characters[itemIndex].GetName();
+        List<string> attributes = characters[itemIndex].GetAttributes();
+        foreach(string s in attributes)
+        {
+            itemDescriptionText.text += s + '\n';
+        }
         
-
-        // PLACEHOLDER VALUES
-        itemImage.texture = defaultTexture;
-        itemNameText.text = "Wild Warwick";
-        itemDescriptionText.text = "+10 Damage\n+20 Attack Speed\n-30 Height";
-
-
         // Change button text and colour based on if item is equipped
         bool isEquipped = true;
         
@@ -125,7 +133,6 @@ public class LoadInventory : MonoBehaviour
             equipButton.GetComponent<Image>().color = Color.green;
             equipButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Equip";
         }
-        
 
         // Change to ItemViewer
         this.transform.gameObject.SetActive(false);

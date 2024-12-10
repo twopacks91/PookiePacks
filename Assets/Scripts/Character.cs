@@ -6,10 +6,10 @@ public class Character
 {
     private Texture2D itemImage;
     private string itemName;
-    private string[] itemAttributes;
+    private List<string> itemAttributes;
     private List<Item> equippedItems;
 
-    public Character(Texture2D image, string name, string[] attributes)
+    public Character(Texture2D image, string name, List<string> attributes)
     {
         this.itemImage = image;
         this.itemName = name;
@@ -27,7 +27,7 @@ public class Character
         return itemName;
     }
 
-    public string[] GetAttributes()
+    public List<string> GetAttributes()
     {
         return itemAttributes;
     }

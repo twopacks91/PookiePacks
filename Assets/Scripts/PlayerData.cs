@@ -25,10 +25,10 @@ public class PlayerData
     //    this.SavePlayer();
     //}
     //// Default constructor - loads player using information stored
-    //public PlayerData()
-    //{
-    //    this.LoadPlayer();
-    //}
+    public PlayerData()
+    {
+        LoadPlayer();
+    }
 
     // Setters & Getters - better protection of user data
     public void SetUsername(string username)
@@ -57,7 +57,7 @@ public class PlayerData
     {
         return mCharacters;
     }
-    
+
     // *** Functions
     /// <summary>
     /// Saves player data into file system using SavePlayer static function
