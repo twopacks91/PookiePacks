@@ -21,34 +21,33 @@ public class LoadInventory : MonoBehaviour
 
     private List<Character> characters;
 
+    private List<string> characterNames = new List<string> 
+    { 
+        "Mercenary", 
+        "Flamer",
+        "Space Soldier", 
+        "Crabby", 
+        "Bonkzilla", 
+        "Demon Girl" 
+    };
+
+    private List<string> characterRarities = new List<string> 
+    { 
+        "Bronze", 
+        "Bronze",
+        "Bronze", 
+        "Silver", 
+        "Silver", 
+        "Gold" 
+    };
     void Start()
     {
-        //PlayerData playerData = new PlayerData();
-        //characters = playerData.GetCharacters();
-        characters = new List<Character>(0);
-        List<string> attr = new List<string>(0)
-        {
-            "-1000 Aura",
-            "-100 Smell"
-        };
-        List<string> attr2 = new List<string>(0)
-        {
-            "-10 IQ",
-            "+100 Smell"
-        };
-        List<string> attr3 = new List<string>(0)
-        {
-            "+1 Height",
-            "-5000 Car"
-        };
-        Character c1 = new Character(itemTextures[0],"Muusman",attr);
-        Character c2 = new Character(itemTextures[1],"MTahir",attr2);
-        Character c3 = new Character(itemTextures[2],"Gwigg",attr3);
-        characters.Add(c1);
-        characters.Add(c2);
-        characters.Add(c3);
+        PlayerData playerData = new PlayerData();
+        characters = playerData.GetCharacters();
         int itemCount = characters.Count;
-        Debug.Log(itemCount);
+
+
+        
 
         // If no characters are present, do nothing
         // We SHOULD indicate to the player their inventory is empty
@@ -68,45 +67,64 @@ public class LoadInventory : MonoBehaviour
         RectTransform itemContainer = (RectTransform)this.transform.Find("ItemContainer");
 
         // Resize the height of the item container acording to how many items are being displayed
-        float newHeight=0.0f;
-        if(itemCount/2>2)
+        float newHeight=1920.0f;
+        if(itemCount/2>=3)
         {
-            for(int i = 0;i<itemCount/2;i++)
+            for(int i = 0;i<(itemCount/2)-2;i++)
             {
                 newHeight += padding+canvasHeight;
             }
         }
-        else
-        {
-            newHeight = 1920;
-        }
         itemContainer.sizeDelta = new Vector2(1080,newHeight);
-        // Move container down after height change
+        // Move container down after height change for proper alignment
         itemContainer.localPosition = new Vector2(0,-newHeight/2);
 
 
         for(int i=0;i<itemCount;i++)
         {
-            // Create new canvas gameobject from item view prefab and add to InventoryCanvas as child
-            Canvas itemCanvas = Instantiate(itemCardPrefab,itemContainer);     
-
+            // Create new canvas gameobject from item view prefab and add to itemContainer as child
+            Canvas itemCanvas = Instantiate(itemCardPrefab,itemContainer);
+            
             // Background image for each "card"
             RawImage background = itemCanvas.GetComponentsInChildren<RawImage>()[0];
-            background.color = Color.white;
-
+            //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;
             // Picture to display each item
             RawImage picture = itemCanvas.GetComponentsInChildren<RawImage>()[1];
-            // picture.texture = characters[i].GetImage();  // FIX THIS FINNNNN
 
-            // Text to contain item name and properties
+            for(int j = 0; j<characterNames.Count; j++)
+            {
+                if(characterNames[j]==characters[i].GetName())
+                {
+                    picture.texture = itemTextures[j];
+                    if(characterRarities[j]=="Bronze")
+                    {
+                        
+                        background.color = new Color(139f/255f,69f/255f,19f/255f);
+                        Debug.Log("Was bronze");
+                    }
+                    else if(characterRarities[j]=="Silver")
+                    {
+                        background.color = new Color(220f/255f,220f/255f,220f/255f);
+                        Debug.Log("Was silver");
+                    }
+                    else if(characterRarities[j]=="Gold")
+                    {
+                        background.color = new Color(128f/255f,0f/255f,128f/255f);
+                        Debug.Log("Was gold");
+                    }
+                }
+            }
+            //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;
+            // Text to contain item name
             TMPro.TextMeshProUGUI itemName = itemCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
-            itemName.text = characters[i].GetName();
+            //itemName.text = characters[i].GetName();
+            itemName.text = "";
             itemName.color = Color.black;
 
-            // Button covering canvas to determine weather item has been clicked
+            // Button covering canvas to determine wether item has been clicked
             Button button = itemCanvas.GetComponentsInChildren<Button>()[0];
             int buttonNum = i;
-            button.onClick.AddListener(() => OnItemClick(buttonNum));
+            button.onClick.AddListener(() => OnItemClick(buttonNum)); // Assigns each button lambda function with its own button number
 
             //Track row count
             if(i%2==0 && i!=0)

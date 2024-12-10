@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 3013830829957591826}
   - component: {fileID: 7084476175105319983}
   - component: {fileID: 9153338364799265518}
+  - component: {fileID: 521710978400489144}
   m_Layer: 5
   m_Name: ItemViewPrefab
   m_TagString: Untagged
@@ -225,6 +226,14 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!222 &521710978400489144
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946879871445740961}
+  m_CullTransparentMesh: 1
 --- !u!1 &4792969693415943686
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +268,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 140}
-  m_SizeDelta: {x: 380, y: 380}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 380, y: 660}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5169191251825368033
 CanvasRenderer:
@@ -467,7 +476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030518, y: 0.00019836}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 420, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5534266891669758670
@@ -491,14 +500,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5377358, g: 0.32720718, b: 0.32720718, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: df3b17ab68da00343a77bebb0c295407, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
