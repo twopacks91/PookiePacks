@@ -1,0 +1,2 @@
+C:\Repos\PookiePacks 2024-11-11_22-07-34\PookiePacks\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Repos\PookiePacks 2024-11-11_22-07-34\PookiePacks\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
