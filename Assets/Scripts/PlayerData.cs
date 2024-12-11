@@ -25,7 +25,7 @@ public class PlayerData
     // Default constructor - loads player using information stored
     public PlayerData()
     {
-
+        this.LoadPlayer();
     }
 
     // Setters & Getters - better protection of user data
