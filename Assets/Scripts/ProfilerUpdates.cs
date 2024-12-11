@@ -9,6 +9,7 @@ public class Profile : MonoBehaviour
     public void Start()
     {
         data = new PlayerData();
+        data.LoadPlayer();
         UsernameTxt.text = "Username: " + data.GetUsername();
     }
 }

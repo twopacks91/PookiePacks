@@ -21,12 +21,11 @@ public class PlayerData
         mPassword = password;
         mItems = new List<Item>(0);
         mCharacters = new List<Character>(0);
-        this.SavePlayer();
     }
     // Default constructor - loads player using information stored
     public PlayerData()
     {
-        LoadPlayer();
+
     }
 
     // Setters & Getters - better protection of user data

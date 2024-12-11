@@ -159,7 +159,7 @@ public class LoadInventory : MonoBehaviour
         TMPro.TextMeshProUGUI itemDescriptionText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
         Button equipButton = itemViewerCanvas.GetComponentsInChildren<Button>()[0];
 
-        // itemImage.texture = characters[itemIndex].GetImage(); // FIX THIS FINNNNN
+        //itemImage.texture = characters[itemIndex].GetImage(); // FIX THIS FINNNNN
         itemNameText.text = characters[itemIndex].GetName();
         itemDescriptionText.text = "";
         List<string> attributes = characters[itemIndex].GetAttributes();
