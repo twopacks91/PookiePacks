@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,6 +47,9 @@ public class Summons : MonoBehaviour
 
         // Ensure user has enough currency
 
+        // TESTING DATABASE - REMOVEEEEEEEE
+        GenerateCharacterNew();
+        return;
 
         // Generate a character to display
         int characterNum = GenerateCharacter();
@@ -79,6 +83,64 @@ public class Summons : MonoBehaviour
 
         // Return index of character generated
         return randomNum;
+    }
+
+    private void GenerateCharacterNew()
+    {
+        // Use summon database file, relative to current path
+        string databaseFile = Path.Combine(Application.dataPath, "Scripts", "SummonTableDraft1.csv");
+        if (!File.Exists(databaseFile))
+        {
+            Debug.LogError($"Summon Error: Database file not found at {databaseFile}");
+            return;
+        }
+
+        // Read database file
+        string[] database = File.ReadAllLines(databaseFile);
+
+        // In database - last line & column 4 contains total rates of all characters in database currently
+        string lastLine = database[database.Length - 1];
+        string[] totalRateData = lastLine.Split(',');
+        if (!float.TryParse(totalRateData[totalRateData.Length - 1], out float totalRates))
+        {
+            Debug.LogError("Summon Error - Unable to get total rates from database");
+            return;
+        }
+
+        Debug.Log($"Read successfully as {totalRates}");  // REMOVE
+
+        // Generate random number in current range of rates
+        float randomValue = UnityEngine.Random.Range(0, totalRates);
+
+        Debug.Log($"RANDOM VALUE WAS - {randomValue}");  // REMOVE
+
+        // Find character pulled using cumulative rates
+        float cumulativeRate = 0;
+        string[] characterData;
+        for (int i = 1; i < database.Length - 1; i++)  // ignore first line (headers) and last
+        {
+            // Get rate for current character and add to cumulative rate
+            string[] data = database[i].Split(',');
+            if (!float.TryParse(data[data.Length - 1], out float rate))
+            {
+                Debug.LogError($"Summon Error - Error parsing character rate {data[data.Length - 1]}");
+                return;
+            }
+            cumulativeRate += rate;
+
+            // Get's the character which is next in rate
+            if (randomValue <= cumulativeRate)
+            {
+                // Return some sort of character
+                Debug.Log($"YEYYYYYYYYY we pulled - {data[1]}");  // REMOVE
+                characterData = data;
+                break;
+            }
+        }
+
+        // *********** Continue coding after Fulham beat Man Utd D; ********************
+        // Load Image to display
+
     }
 
     /// <summary>
