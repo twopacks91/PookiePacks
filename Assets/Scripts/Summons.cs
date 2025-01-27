@@ -1,6 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+
+
+// **** REMEMBER - Improve animations for greater rarity of characters eventually
 
 [System.Serializable]
 public class Summons : MonoBehaviour
@@ -9,7 +14,14 @@ public class Summons : MonoBehaviour
     private const float kAnimationTime = 5.0f;  // animation time in seconds
     private const float kMagicDelay = 1.0f;
     private const float kLightningDelay = 3.0f;
-    //List<Characters> characterList;  // FUTURE
+
+    private const int kCharacterName = 1;
+    private const int kCharacterImageName = 2;
+    private const int kCharacterRarity = 3;
+
+    private const string kRarityBronze = "bronze";
+    private const string kRaritySilver = "silver";
+    private const string kRarityGold = "gold";
 
     // Canvases
     [SerializeField]
@@ -46,39 +58,106 @@ public class Summons : MonoBehaviour
 
         // Ensure user has enough currency
 
+        // Database Format (5): ID - Character Name - Character Image Name - Rarity - Rate
+        string [] characterData = null;
+        if(!GenerateCharacter(ref characterData))
+        {
+            Debug.LogError("Summon Error - failure to generate character!");
+            return;
+        }
 
-        // Generate a character to display
-        int characterNum = GenerateCharacter();
+        // Play animation based on rarity
+        PlayRarityAnimation(characterData[kCharacterRarity]);
 
         // Save character to user's inventory
-        SaveSummonToInventory(characterNum);
+        SaveSummonToInventory(characterData[kCharacterName], characterData[kCharacterImageName]);
+        Debug.Log("Successfully Saved to Inventory!");
 
         // Show conclusion - this function accounts for animation time
-        ShowConclusion(characterNum);
+        ShowConclusion(characterData[kCharacterImageName]);
     }
 
-    /// <summary>
-    /// Generate a character for the specified summon
-    /// </summary>
-    private int GenerateCharacter()
-    {
-        // - - IMPORTANT = currently static, will change when more characters class exists
-        // Generate a random number (will have biased rarities)
-        int randomNum = UnityEngine.Random.Range(0, characterList.Count);
-        Debug.Log("Random number: " + randomNum);  // REMOVE
 
+    /// <summary>
+    /// Generates a random character using database of characters
+    /// </summary>
+    /// <param name="characterData"> list of character data which will update when successfully generated </param>
+    /// <returns></returns>
+    private bool GenerateCharacter(ref string[] characterData)
+    {
+        // Read summon database file, relative to current path
+        string databaseFile = Path.Combine(Application.dataPath, "Scripts", "SummonTableDraft2.csv");
+        if (!File.Exists(databaseFile))
+        {
+            Debug.LogError($"Summon Error: Database file not found at {databaseFile}");
+            return false;
+        }
+        string[] database = File.ReadAllLines(databaseFile);
+
+        // In database - last line & last column contains total rates of all characters in database currently
+        string lastLine = database[database.Length - 1];
+        string[] totalRateData = lastLine.Split(',');
+        if (!float.TryParse(totalRateData[totalRateData.Length - 1], out float totalRates))
+        {
+            Debug.LogError("Summon Error - Unable to get total rates from database");
+            return false;
+        }
+
+        Debug.Log($"Read successfully as {totalRates}");  // REMOVE
+
+        // Generate random number in current range of rates
+        float randomValue = UnityEngine.Random.Range(0, totalRates);
+
+        Debug.Log($"RANDOM VALUE WAS - {randomValue}");  // REMOVE
+
+        // Find character pulled using cumulative rates
+        float cumulativeRate = 0;
+        for (int i = 1; i < database.Length - 1; i++)  // ignore first line (headers) and last
+        {
+            // Get rate for current character and add to cumulative rate
+            string[] data = database[i].Split(',');
+            if (!float.TryParse(data[data.Length - 1], out float rate))
+            {
+                Debug.LogError($"Summon Error - Error parsing character rate {data[data.Length - 1]}");
+                return false;
+            }
+            cumulativeRate += rate;
+
+            // Get's the character which is next in rate
+            if (randomValue <= cumulativeRate)
+            {
+                // Assign character data to parameter
+                Debug.Log($"YEYYYYYYYYY we pulled - {data[1]}");  // REMOVE
+                characterData = data;
+                break;
+            }
+        }
+
+        // Ensure parameter was updated correctly with character data
+        if (characterData == null)
+        {
+            Debug.LogError("Summon Error - Couldn't acquire character data");
+            return false;
+        }
+        return true;
+    }
+
+
+    /// <summary>
+    /// Plays an animation on screen based on the rarity of character generated
+    /// </summary>
+    /// <param name="rarity"></param>
+    private void PlayRarityAnimation(string rarity)
+    {
         // Modify animation based on character rarity
-        if (randomNum >= 3)  // silver rarity or gold
+        if ((rarity == kRarityGold) || (rarity == kRaritySilver))
         {
             Invoke(nameof(PlayMagicEffect), kMagicDelay);
-            if (randomNum >= 5)  // gold rarity
+            if (rarity == kRarityGold)
             {
                 Invoke(nameof(PlayLightningEffect), kLightningDelay);
             }
         }
-
-        // Return index of character generated
-        return randomNum;
     }
 
     /// <summary>
@@ -99,39 +178,37 @@ public class Summons : MonoBehaviour
 
 
     /// <summary>
-    /// Called in the process of summoning to save the character to the user's inventory
+    /// Saves character summoned to user's inventory
     /// </summary>
-    /// <param name="characterNum"></param>
-    private void SaveSummonToInventory(int characterNum)
+    /// <param name="characterName"></param>
+    /// <param name="characterImageName"></param>
+    private void SaveSummonToInventory(string characterName, string characterImageName)
     {
         // Make instance of character and save it to current player 
-        Debug.Log("Character saved to inventory: " + characterNames[characterNum]);  // REMOVE
-
-        Character newChar = new Character(characterList[characterNum].texture.ToString(), characterNames[characterNum], 
+        Character newChar = new Character(characterImageName, characterName,
             new List<string> { "Snoop", "Doggy", "Dawg", "should have power values for character" });
 
-        Debug.Log("Made new character");  // REMOVE
-
+        // Get current player data and insert new character into their inventory
         PlayerData currentPlayer = new PlayerData();
-
-        Debug.Log("Made new player");  // REMOVE
-
         currentPlayer.InsertCharacter(newChar);
-
-        Debug.Log("Inserted new character");  // REMOVE
-
         currentPlayer.SavePlayer();
-
-        Debug.Log("SSUCCESS in saving to inventory");  // REMOVE
     }
 
+
     /// <summary>
-    /// Called in the process of summoning after animation expires
+    /// Updates to display final character image and end animations for a smooth transition
     /// </summary>
-    private void ShowConclusion(int charNum)
+    /// <param name="characterImageName"></param>
+    private void ShowConclusion(string characterImageName)
     {
-        // Change conclusion canvas background to character summoned
-        backgroundImage.texture = characterList[charNum].texture;
+        // Update conclusion canvas background
+        Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characterImageName}");
+        if (sprite == null)
+        {
+            Debug.Log($"Summon Error - Couldn't load summon sprite at file path: Images/Summons/{characterImageName}");
+            return;
+        }
+        backgroundImage.texture = sprite.texture;
 
         // Show conclusion canvas after animation time
         Invoke(nameof(ShowConclusionHelper), kAnimationTime);
