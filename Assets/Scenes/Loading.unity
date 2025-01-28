@@ -791,6 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fakeLoad: 1
+  loadingBar: {fileID: 1130696685}
 --- !u!1 &1130696684
 GameObject:
   m_ObjectHideFlags: 0
