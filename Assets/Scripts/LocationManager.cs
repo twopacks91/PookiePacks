@@ -4,16 +4,16 @@ using System.Collections;
 
 
 
-public class LocationManager
+public class LocationManager : MonoBehaviour
 {
     private float lat;
     private float lon;
     private const int serviceStartWait = 20; // Time to wait for location services to start on phone
     private const float UniLat = 53.762787f;
     private const float UniLon = -2.707331f;
-    private const float UniRadius = 380.0f; // In meters
+    private const float UniRadius = 400.0f; // In meters
 
-    public LocationManager()
+    public LocationManager() 
     {
         if(!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
@@ -70,8 +70,10 @@ public class LocationManager
         }
         else
         {
+            
             this.lat = Input.location.lastData.latitude;
             this.lon = Input.location.lastData.longitude;
+            Debug.Log(lat.ToString()+ " " + lon.ToString());
         }
 
         Input.location.Stop();
@@ -79,7 +81,7 @@ public class LocationManager
 
     public bool IsUserAtUClan()
     {
-        UpdateLocation();
+        StartCoroutine(UpdateLocation());
         // Distance to UClan student centre 
         // Calculated assuming flat earth (which we all know is true)
         float metersPerDegreeLat = 111320.0f;
@@ -89,6 +91,7 @@ public class LocationManager
         float diffLon = (UniLon - this.lon) * metersPerDegreeLon;
 
         float distanceToUni = Mathf.Sqrt(Mathf.Pow(diffLat,2) + Mathf.Pow(diffLon, 2));
+        Debug.Log("distance from uni:" + distanceToUni.ToString());
 
         if(distanceToUni>UniRadius)
         {

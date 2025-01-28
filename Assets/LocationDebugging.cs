@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 
 
@@ -14,8 +15,10 @@ public class LocationDebugging : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        locationManager = new LocationManager();
-        if(locationManager.IsUserAtUClan())
+        LocationManager locationManager = this.transform.AddComponent<LocationManager>();
+        bool isAtUni = locationManager.IsUserAtUClan();
+        Debug.Log("At uni:" + isAtUni.ToString());
+        if(isAtUni)
         {
             textBox.text = "You are at UCLan, heres 500 dollar!";
         }
