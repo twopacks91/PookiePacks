@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 55ba725d2ca829d4280a533d7f1942e1
+timeCreated: 1483488937
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 76251
+  packageName: PBR HammerHead Whale Free
+  packageVersion: .75
+  assetPath: Assets/Whale/Scenes/DisplayScene.unity
+  uploadId: 154167
