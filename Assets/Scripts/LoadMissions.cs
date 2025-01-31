@@ -33,14 +33,12 @@ public class LoadMissions : MonoBehaviour
 
         missions.Add(new Mission { name = "Go to UCLAN", details = "These details are details\nReward: 20 bucks", needed = 6, progress = 2 });
         missions.Add(new Mission { name = "Donate to us", details = "Please send 0.465 BTC to my wallet", needed = 1, progress = 0 });
-        missions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
-        missions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
+        missions.Add(new Mission { name = "Win battles", details = "Reward: 40 buckeroos", needed = 6, progress = 4 });
+        missions.Add(new Mission { name = "Open diddy packs", details = "Reward: 1 skibidi pack", needed = 4, progress = 2 });
         missions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
         missions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
 
-        RectTransform itemContainer = (RectTransform)this.transform.Find("ItemContainer");
-        float containerHeight = itemContainer.GetComponent<RectTransform>().rect.height;
-        float containerWidth = itemContainer.GetComponent<RectTransform>().rect.width;
+        RectTransform itemContainer = (RectTransform)this.transform.Find("Mask").transform.Find("ItemContainer");
         float canvasHeight = missionCardPrefab.GetComponent<RectTransform>().rect.height;
 
         float newHeight = 1920.0f;
@@ -79,6 +77,11 @@ public class LoadMissions : MonoBehaviour
             missionCards.Add(missionCanvas);
             row++;
         }
+
+        // Add extra height screensize-1920 so it fits within the mask 
+        itemContainer.sizeDelta = new Vector2(1080, newHeight+480);
+        // Move container down after height change for proper alignment
+        itemContainer.localPosition = new Vector2(0, -newHeight / 2);
     }
 
     // Update is called once per frame

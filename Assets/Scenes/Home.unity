@@ -660,7 +660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 296.5, y: 260.02856}
+  m_AnchoredPosition: {x: 257.23, y: 260.02856}
   m_SizeDelta: {x: 413.006, y: 245.943}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817791502
@@ -807,7 +807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -296.49994, y: 196}
+  m_AnchoredPosition: {x: -257.23, y: 196}
   m_SizeDelta: {x: 413.00598, y: 245.943}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &823326378
@@ -1473,7 +1473,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 404, y: 875}
+  m_AnchoredPosition: {x: 350, y: 955}
   m_SizeDelta: {x: 200, y: 100.537}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1473903574
@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Objectives
+  m_text: Missions
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1750,7 +1750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -296.5, y: 260.02856}
+  m_AnchoredPosition: {x: -257.23, y: 260.02856}
   m_SizeDelta: {x: 413.00598, y: 245.943}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762135384
@@ -2220,8 +2220,9 @@ GameObject:
   - component: {fileID: 1964733439}
   - component: {fileID: 1964733438}
   - component: {fileID: 1964733437}
+  - component: {fileID: 1964733440}
   m_Layer: 5
-  m_Name: ObjectivesButton
+  m_Name: MissionsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2244,7 +2245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 296.5, y: 196}
+  m_AnchoredPosition: {x: 257.23004, y: 196}
   m_SizeDelta: {x: 413.006, y: 245.943}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1964733437
@@ -2290,7 +2291,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1964733438}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1964733440}
+        m_TargetAssemblyTypeName: SwapScene, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Missions
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1964733438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2329,6 +2342,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964733435}
   m_CullTransparentMesh: 1
+--- !u!114 &1964733440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964733435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf241d80dac94e4888564148b6752eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2050982630
 GameObject:
   m_ObjectHideFlags: 0
