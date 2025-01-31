@@ -42,14 +42,14 @@ public class LoadMissions : MonoBehaviour
         ToDoMissions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
 
         DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
+        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
 
 
         itemContainer = (RectTransform)this.transform.Find("Mask").transform.Find("ItemContainer");
@@ -61,6 +61,18 @@ public class LoadMissions : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnClaimClick(int listIndex)
+    {
+        Debug.Log("Pressed mission:" + listIndex.ToString());
+        Mission claimedMission = ToDoMissions[listIndex];
+        DoneMissions.Add(claimedMission);
+        ToDoMissions.RemoveAt(listIndex);
+        // TO DO: write code to claim reward from claimedMission
+
+        // Refresh ToDoList items
+        LoadToDoList();
     }
 
     public void LoadToDoList()
@@ -98,6 +110,7 @@ public class LoadMissions : MonoBehaviour
             TextMeshProUGUI missionDetails = missionCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
             Slider progressSlider = missionCanvas.GetComponentsInChildren<Slider>()[0];
             TextMeshProUGUI progressText = progressSlider.GetComponentsInChildren<TextMeshProUGUI>()[0];
+            Button claimButton = missionCanvas.GetComponentsInChildren<Button>()[0];
 
             // Assign gameObjects with relevant information
             missionName.text = mission.name;
@@ -105,6 +118,20 @@ public class LoadMissions : MonoBehaviour
             progressSlider.maxValue = mission.needed;
             progressSlider.value = mission.progress;
             progressText.text = mission.progress.ToString() + "/" + mission.needed.ToString();
+
+            // If mission is available to be claimed, display button to claim
+            if(mission.needed <=mission.progress)
+            {
+                claimButton.gameObject.SetActive(true);
+
+                // Give lambda function to button onClick
+                int butIndex = row;
+                claimButton.onClick.AddListener(() => OnClaimClick(butIndex));
+            }
+            else
+            {
+                claimButton.gameObject.SetActive(false);
+            }
 
             // Change instance position
             missionCanvas.transform.localPosition = new Vector2(0, -padding - (canvasHeight / 2) - (row * (canvasHeight + padding)) + newHeight / 2);
@@ -154,6 +181,7 @@ public class LoadMissions : MonoBehaviour
             TextMeshProUGUI missionDetails = missionCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
             Slider progressSlider = missionCanvas.GetComponentsInChildren<Slider>()[0];
             TextMeshProUGUI progressText = progressSlider.GetComponentsInChildren<TextMeshProUGUI>()[0];
+            Button claimButton = missionCanvas.GetComponentsInChildren<Button>()[0];
 
             // Assign gameObjects with relevant information
             missionName.text = mission.name;
@@ -161,6 +189,7 @@ public class LoadMissions : MonoBehaviour
             progressSlider.maxValue = mission.needed;
             progressSlider.value = mission.progress;
             progressText.text = mission.progress.ToString() + "/" + mission.needed.ToString();
+            claimButton.gameObject.SetActive(false);
 
             // Change instance position
             missionCanvas.transform.localPosition = new Vector2(0, -padding - (canvasHeight / 2) - (row * (canvasHeight + padding)) + newHeight / 2);
