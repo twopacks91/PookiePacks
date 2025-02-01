@@ -86,7 +86,8 @@ public class Summons : MonoBehaviour
     private bool GenerateCharacter(ref string[] characterData)
     {
         // Read summon database file, relative to current path
-        string databaseFile = Path.Combine(Application.dataPath, "Scripts", "SummonTableDraft2.csv");
+        string databaseFile = Path.Combine(Application.dataPath, "Databases", "SummonTableDraft3.csv");
+        //string databaseFile = Path.Combine(Application.dataPath, "Scripts", "SummonTableDraft2.csv");
         if (!File.Exists(databaseFile))
         {
             Debug.LogError($"Summon Error: Database file not found at {databaseFile}");
@@ -205,8 +206,9 @@ public class Summons : MonoBehaviour
         Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characterImageName}");
         if (sprite == null)
         {
+            // Log error and show replacement image if sprite not found
             Debug.Log($"Summon Error - Couldn't load summon sprite at file path: Images/Summons/{characterImageName}");
-            return;
+            sprite = Resources.Load<Sprite>($"Images/Summons/image_not_found");
         }
         backgroundImage.texture = sprite.texture;
 
