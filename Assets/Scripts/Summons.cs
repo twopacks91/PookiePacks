@@ -13,7 +13,9 @@ public class Summons : MonoBehaviour
     // *** Variables
     private const float kAnimationTime = 5.0f;  // animation time in seconds
     private const float kMagicDelay = 1.0f;
-    private const float kLightningDelay = 3.0f;
+    private const float kLightningDelay = 2.0f;
+    private const float kSphereBottomDelay = 3.0f;
+    private const float kScreenSplashDelay = 3.5f;
 
     private const int kCharacterName = 1;
     private const int kCharacterImageName = 2;
@@ -22,6 +24,8 @@ public class Summons : MonoBehaviour
     private const string kRarityBronze = "bronze";
     private const string kRaritySilver = "silver";
     private const string kRarityGold = "gold";
+    private const string kRarityDiamond = "diamond";
+    private const string kRarityLegendary = "legendary";
 
     // Canvases
     [SerializeField]
@@ -30,20 +34,18 @@ public class Summons : MonoBehaviour
     private Canvas animationCanvas;
     [SerializeField]
     private Canvas conclusionCanvas;
+    [SerializeField]
+    private RawImage backgroundImage;
 
     // Animation & Effects
     [SerializeField]
     private GameObject magicEffect;
     [SerializeField]
     private GameObject lightningEffect;
-
-    // Character Generation
     [SerializeField]
-    private RawImage backgroundImage;
+    private GameObject sphereBottomEffect;
     [SerializeField]
-    List<Sprite> characterList;  // remove once character class exists
-    List<string> characterNames = new List<string> { "Mercenary", "Flamer",
-        "Space Soldier", "Crabby", "Bonkzilla", "Demon Girl" }; // static setup based on sprite entry currently
+    private GameObject screenSplashEffect;
 
 
     // *** Functions
@@ -151,12 +153,22 @@ public class Summons : MonoBehaviour
     private void PlayRarityAnimation(string rarity)
     {
         // Modify animation based on character rarity
-        if ((rarity == kRarityGold) || (rarity == kRaritySilver))
+        if ((rarity == kRaritySilver)  || (rarity == kRarityGold) || (rarity == kRarityDiamond) || (rarity == kRarityLegendary))
         {
             Invoke(nameof(PlayMagicEffect), kMagicDelay);
-            if (rarity == kRarityGold)
+            if ((rarity == kRarityGold) || (rarity == kRarityDiamond) || (rarity == kRarityLegendary))
             {
                 Invoke(nameof(PlayLightningEffect), kLightningDelay);
+
+                if ((rarity == kRarityDiamond) || (rarity == kRarityLegendary))
+                {
+                    Invoke(nameof(PlaySphereEffect), kSphereBottomDelay);
+
+                    if (rarity == kRarityLegendary)
+                    {
+                        Invoke(nameof(PlayScreenSplashEffect), kScreenSplashDelay);
+                    }
+                }
             }
         }
     }
@@ -177,6 +189,21 @@ public class Summons : MonoBehaviour
         lightningEffect.SetActive(true);
     }
 
+    /// <summary>
+    /// Called in generate character, plays bottom sphere effect which is initially disabled.
+    /// </summary>
+    private void PlaySphereEffect()
+    {
+        sphereBottomEffect.SetActive(true);
+    }
+
+    /// <summary>
+    /// Called in generate character, plays screen splash effect which is initially disabled.
+    /// </summary>
+    private void PlayScreenSplashEffect()
+    { 
+        screenSplashEffect.SetActive(true); 
+    }
 
     /// <summary>
     /// Saves character summoned to user's inventory
@@ -228,6 +255,8 @@ public class Summons : MonoBehaviour
         // Disable effects
         magicEffect.SetActive(false);
         lightningEffect.SetActive(false);
+        sphereBottomEffect.SetActive(false);
+        screenSplashEffect.SetActive(false);
     }
 
     /// <summary>
