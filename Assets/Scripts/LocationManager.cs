@@ -38,7 +38,6 @@ public class LocationManager : MonoBehaviour
 
     public bool HasLocationPermission()
     {
-
         return Input.location.isEnabledByUser;
     }
 

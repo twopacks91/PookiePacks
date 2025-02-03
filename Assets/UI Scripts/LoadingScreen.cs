@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class LoadingScreen : MonoBehaviour
 {
     public bool fakeLoad;
+
+    [SerializeField]
     private Slider loadingBar;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
