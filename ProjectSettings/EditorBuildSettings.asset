@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: 400cce10a8b456e489db7a0698ff94cf
+  - enabled: 1
+    path: Assets/Scenes/Missions.unity
+    guid: 2085f8e50636b8746903e653e45a238f
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
