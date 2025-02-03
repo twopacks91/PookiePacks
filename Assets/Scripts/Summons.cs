@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,15 +14,23 @@ public class Summons : MonoBehaviour
     // *** Variables
     private const float kAnimationTime = 5.0f;  // animation time in seconds
     private const float kMagicDelay = 1.0f;
-    private const float kLightningDelay = 3.0f;
+    private const float kLightningDelay = 2.0f;
+    private const float kSphereBottomDelay = 3.0f;
+    private const float kScreenSplashDelay = 3.5f;
 
-    private const int kCharacterName = 1;
-    private const int kCharacterImageName = 2;
-    private const int kCharacterRarity = 3;
+    private const int kCharacterName = 1;  // for summon and character database
+    private const int kCharacterImageName = 2;  // for summon database only
+    private const int kCharacterRarity = 3;  // for summon database only
+    private const int kStatHP = 3;  // for character database only
+    private const int kStatAttack = 4;  // for character database only
+    private const int kStatDefence = 5;  // for character database only
 
     private const string kRarityBronze = "bronze";
     private const string kRaritySilver = "silver";
     private const string kRarityGold = "gold";
+    private const string kRarityDiamond = "diamond";
+    private const string kRarityLegendary = "legendary";
+    private const string kStatValuesWhenError = "NA";
 
     // Canvases
     [SerializeField]
@@ -30,21 +39,26 @@ public class Summons : MonoBehaviour
     private Canvas animationCanvas;
     [SerializeField]
     private Canvas conclusionCanvas;
+    [SerializeField]
+    private RawImage backgroundImage;
 
     // Animation & Effects
     [SerializeField]
     private GameObject magicEffect;
     [SerializeField]
     private GameObject lightningEffect;
-
-    // Character Generation
     [SerializeField]
-    private RawImage backgroundImage;
+    private GameObject sphereBottomEffect;
     [SerializeField]
-    List<Sprite> characterList;  // remove once character class exists
-    List<string> characterNames = new List<string> { "Mercenary", "Flamer",
-        "Space Soldier", "Crabby", "Bonkzilla", "Demon Girl" }; // static setup based on sprite entry currently
+    private GameObject screenSplashEffect;
 
+    // Stat Text
+    [SerializeField]
+    private TextMeshProUGUI hpText;
+    [SerializeField]
+    private TextMeshProUGUI attackText;
+    [SerializeField]
+    private TextMeshProUGUI defenceText;
 
     // *** Functions
     /// <summary>
@@ -69,9 +83,16 @@ public class Summons : MonoBehaviour
         // Play animation based on rarity
         PlayRarityAnimation(characterData[kCharacterRarity]);
 
+        // Prepare to show character stats
+        string [] statData = null;
+        ShowCharacterStats(characterData[kCharacterName], ref statData);
+
         // Save character to user's inventory
-        SaveSummonToInventory(characterData[kCharacterName], characterData[kCharacterImageName]);
+        SaveSummonToInventory(characterData[kCharacterName], characterData[kCharacterImageName], statData);
         Debug.Log("Successfully Saved to Inventory!");
+
+        //// Prepare to show character stats
+        //ShowCharacterStats(characterData[kCharacterName]);
 
         // Show conclusion - this function accounts for animation time
         ShowConclusion(characterData[kCharacterImageName]);
@@ -86,10 +107,10 @@ public class Summons : MonoBehaviour
     private bool GenerateCharacter(ref string[] characterData)
     {
         // Read summon database file, relative to current path
-        string databaseFile = Path.Combine(Application.dataPath, "Scripts", "SummonTableDraft2.csv");
+        string databaseFile = Path.Combine(Application.dataPath, "Databases", "SummonTableDraft3.csv");
         if (!File.Exists(databaseFile))
         {
-            Debug.LogError($"Summon Error: Database file not found at {databaseFile}");
+            Debug.LogError($"Summon Error: Summon Database file not found at {databaseFile}");
             return false;
         }
         string[] database = File.ReadAllLines(databaseFile);
@@ -150,12 +171,22 @@ public class Summons : MonoBehaviour
     private void PlayRarityAnimation(string rarity)
     {
         // Modify animation based on character rarity
-        if ((rarity == kRarityGold) || (rarity == kRaritySilver))
+        if ((rarity == kRaritySilver)  || (rarity == kRarityGold) || (rarity == kRarityDiamond) || (rarity == kRarityLegendary))
         {
             Invoke(nameof(PlayMagicEffect), kMagicDelay);
-            if (rarity == kRarityGold)
+            if ((rarity == kRarityGold) || (rarity == kRarityDiamond) || (rarity == kRarityLegendary))
             {
                 Invoke(nameof(PlayLightningEffect), kLightningDelay);
+
+                if ((rarity == kRarityDiamond) || (rarity == kRarityLegendary))
+                {
+                    Invoke(nameof(PlaySphereEffect), kSphereBottomDelay);
+
+                    if (rarity == kRarityLegendary)
+                    {
+                        Invoke(nameof(PlayScreenSplashEffect), kScreenSplashDelay);
+                    }
+                }
             }
         }
     }
@@ -176,22 +207,92 @@ public class Summons : MonoBehaviour
         lightningEffect.SetActive(true);
     }
 
+    /// <summary>
+    /// Called in generate character, plays bottom sphere effect which is initially disabled.
+    /// </summary>
+    private void PlaySphereEffect()
+    {
+        sphereBottomEffect.SetActive(true);
+    }
+
+    /// <summary>
+    /// Called in generate character, plays screen splash effect which is initially disabled.
+    /// </summary>
+    private void PlayScreenSplashEffect()
+    { 
+        screenSplashEffect.SetActive(true); 
+    }
 
     /// <summary>
     /// Saves character summoned to user's inventory
     /// </summary>
     /// <param name="characterName"></param>
     /// <param name="characterImageName"></param>
-    private void SaveSummonToInventory(string characterName, string characterImageName)
+    private void SaveSummonToInventory(string characterName, string characterImageName, string[] statData)
     {
         // Make instance of character and save it to current player 
-        Character newChar = new Character(characterImageName, characterName,
-            new List<string> { "Snoop", "Doggy", "Dawg", "should have power values for character" });
+        List<string> statList = new List<string>();
+        statList.Add($"HP: {statData[0]}");
+        statList.Add($"ATTACK: {statData[1]}");
+        statList.Add($"DEFENCE: {statData[2]}");
+        Character newChar = new Character(characterImageName, characterName, statList);
 
         // Get current player data and insert new character into their inventory
         PlayerData currentPlayer = new PlayerData();
         currentPlayer.InsertCharacter(newChar);
         currentPlayer.SavePlayer();
+    }
+
+
+    /// <summary>
+    /// Changes conslusion screen stats based on the character generated, stats stored in local database
+    /// </summary>
+    /// <param name="characterName"> string as name of character to search for </param>
+    /// <param name="statData"> list of strings containing character data </param>
+    private void ShowCharacterStats(string characterName, ref string[] statData)
+    {
+        // Get this character's stats from database
+        string databaseFile = Path.Combine(Application.dataPath, "Databases", "CharacterTableDraft1.csv");
+        if (!File.Exists(databaseFile))
+        {
+            // Mark text as NA for not available and return early
+            Debug.LogError($"Summon Error: Character database file not found at {databaseFile}");
+            hpText.text = kStatValuesWhenError;
+            attackText.text = kStatValuesWhenError;
+            defenceText.text = kStatValuesWhenError;
+            return;
+        }
+        string[] database = File.ReadAllLines(databaseFile);
+
+        // Ignore line 1 in database, it's just headings
+        // Find this character and thier details in database
+        string[] characterData = { };
+        for (int i = 1; i < database.Length; i++)
+        {
+            string[] data = database[i].Split(',');
+            if (data[kCharacterName] == characterName)
+            {
+                characterData = data;
+                break;
+            }
+        }
+
+        // Ensure character was found in database, otherwise log error and set stat values to NA for "Not available"
+        if (characterData.Length == 0)
+        {
+            Debug.LogError($"Summon Error: Character not found in database, name is {characterName}");
+            hpText.text = kStatValuesWhenError;
+            attackText.text = kStatValuesWhenError;
+            defenceText.text = kStatValuesWhenError;
+            return;
+        }
+
+        // Update conclusion screen stat text based on character data
+        hpText.text = characterData[kStatHP];
+        attackText.text = characterData[kStatAttack];
+        defenceText.text = characterData[kStatDefence];
+        string[] tempData = { characterData[kStatHP], characterData[kStatAttack], characterData[kStatDefence] };
+        statData = tempData;
     }
 
 
@@ -205,8 +306,9 @@ public class Summons : MonoBehaviour
         Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characterImageName}");
         if (sprite == null)
         {
+            // Log error and show replacement image if sprite not found
             Debug.Log($"Summon Error - Couldn't load summon sprite at file path: Images/Summons/{characterImageName}");
-            return;
+            sprite = Resources.Load<Sprite>($"Images/Summons/image_not_found");
         }
         backgroundImage.texture = sprite.texture;
 
@@ -226,6 +328,8 @@ public class Summons : MonoBehaviour
         // Disable effects
         magicEffect.SetActive(false);
         lightningEffect.SetActive(false);
+        sphereBottomEffect.SetActive(false);
+        screenSplashEffect.SetActive(false);
     }
 
     /// <summary>

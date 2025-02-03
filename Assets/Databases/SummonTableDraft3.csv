@@ -1,0 +1,21 @@
+ID,CharacterName,AssetName,Rarity,Rate
+1,Demon Girl,gold_demonGirl,gold,2.875
+2,Crabby,silver_crabby,silver,5
+3,Bonkzilla,silver_bonkzilla,silver,5
+4,Coppa,bronze_coppa,bronze,10
+5,Flamer,bronze_flamer,bronze,10
+6,Mercenary,bronze_mercenary,bronze,10
+7,Trackstar,bronze_trackstar,bronze,10
+8,Jawski,bronze_jawski,bronze,10
+9,Alexa,bronze_alexa,bronze,10
+10,Grindroid,silver_grindroid,silver,5
+11,Matt,silver_matt,silver,5
+12,Jonesy,silver_jonesy,silver,5
+13,Bob,gold_bob,gold,2.875
+14,Pengting,gold_pengting,gold,2.875
+15,Brawlerina,gold_brawlerina,gold,2.875
+16,Phaval,legendary_phaval,legendary,0.5
+17,Weekday Duo,diamond_weekdayDuo,diamond,1
+18,Lesss Gooo,diamond_lesssGooo,diamond,1
+19,Huzz,diamond_huzz,diamond,1
+Total,,,,100
