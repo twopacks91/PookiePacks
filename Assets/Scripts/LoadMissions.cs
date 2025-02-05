@@ -1,17 +1,29 @@
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-struct Mission
+[System.Serializable]
+public class Mission
 {
-    public string name;
-    public string details;
-    public int needed;
-    public int progress;
+    public int id { get; set; }
+    public string name { get; set; }
+    public string details { get; set; }
+    public string reward { get; set; }
+    public int needed { get; set; }
+    public int progress { get; set; }
 
-    
+    public Mission(int id, string name, string details, string reward, int needed, int progress)
+    {
+        this.id = id;
+        this.name = name;
+        this.details = details;
+        this.reward = reward;
+        this.needed = needed;
+        this.progress = progress;
+    }
 }
 
 
@@ -33,24 +45,11 @@ public class LoadMissions : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // This will all be pulled from database/playerdata eventually
-        ToDoMissions.Add(new Mission { name = "Go to UCLAN", details = "These details are details\nReward: 20 bucks", needed = 6, progress = 2 });
-        ToDoMissions.Add(new Mission { name = "Donate to us", details = "Please send 0.465 BTC to my wallet", needed = 1, progress = 0 });
-        ToDoMissions.Add(new Mission { name = "Win battles", details = "Reward: 40 buckeroos", needed = 6, progress = 4 });
-        ToDoMissions.Add(new Mission { name = "Open diddy packs", details = "Reward: 1 skibidi pack", needed = 4, progress = 2 });
-        ToDoMissions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
-        ToDoMissions.Add(new Mission { name = "Anotha one", details = "Tell em to bring out the whole ocean", needed = 1, progress = 1 });
+        PlayerData playerData = new PlayerData();
+        ToDoMissions = playerData.GetToDoMissions();
+        DoneMissions = playerData.GetDoneMissions();
 
-        DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-        //DoneMissions.Add(new Mission { name = "Play fortnite", details = "we like fortnight", needed = 6, progress = 6 });
-
+        
 
         itemContainer = (RectTransform)this.transform.Find("Mask").transform.Find("ItemContainer");
 
@@ -77,8 +76,12 @@ public class LoadMissions : MonoBehaviour
 
     public void LoadToDoList()
     {
+        foreach (Mission mis in ToDoMissions)
+        {
+            Debug.Log(mis.name);
+        }
         // Clear all mission cards from the screen
-        foreach(Canvas missionCanvas in missionCards)
+        foreach (Canvas missionCanvas in missionCards)
         {
             Destroy(missionCanvas.gameObject);
         }
@@ -114,7 +117,7 @@ public class LoadMissions : MonoBehaviour
 
             // Assign gameObjects with relevant information
             missionName.text = mission.name;
-            missionDetails.text = mission.details;
+            missionDetails.text = mission.details + '\n' + mission.reward;
             progressSlider.maxValue = mission.needed;
             progressSlider.value = mission.progress;
             progressText.text = mission.progress.ToString() + "/" + mission.needed.ToString();
