@@ -6,6 +6,10 @@ public class Character
 {
     private string itemImage;  // image name
     private string itemName;
+    private string rarity;
+    private int HP;
+    private int attack;
+    private int defence;
     private List<string> itemAttributes;
     private List<Item> equippedItems;
 
@@ -15,6 +19,11 @@ public class Character
         this.itemName = name;
         this.itemAttributes = attributes;
         this.equippedItems = new List<Item>(0);
+    }
+
+    public string GetRarity()
+    {
+        return rarity;
     }
 
     public string GetImage()
