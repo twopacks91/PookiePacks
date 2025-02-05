@@ -7,43 +7,45 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Loading.unity
-    guid: 49f4c463c4e5c1442b7b0d468ba37269
+    guid: 4f6609ce7ac90cc448b65855c340a65f
   - enabled: 1
     path: Assets/Scenes/Login.unity
-    guid: e8539ed5ab02bdd49a81ef6f540043f7
-  - enabled: 1
-    path: Assets/Scenes/Register.unity
-    guid: 308c6bb32a8a4084a82607b0f514ffa8
+    guid: fc4d082a92cf97244b2fda49807f0f16
   - enabled: 1
     path: Assets/Scenes/Home.unity
-    guid: b1122c03c5ecffe408b3be913026587f
-  - enabled: 1
-    path: Assets/Scenes/Inventory.unity
-    guid: 1823d800b096107489b8138750209d7f
-  - enabled: 1
-    path: Assets/Scenes/Profiler.unity
-    guid: 86c63623ff504394e8fce0a477588e6c
-  - enabled: 1
-    path: Assets/Scenes/AREnv.unity
+    guid: 5974d3a7d1f25a44ca4bd8d291eef733
+  - enabled: 0
+    path: Assets/Scenes/AREnv Half.unity
+    guid: 8ea1e6fc78185fe44957bb646e24cb27
+  - enabled: 0
+    path: Assets/Scenes/AREnv original.unity
     guid: 4755b35b590504809a7525fd2109c2e2
   - enabled: 1
+    path: Assets/Scenes/Inventory.unity
+    guid: bc2e5c72d33aa2d43a673655e2af0685
+  - enabled: 1
     path: Assets/Scenes/Summons.unity
-    guid: a13eabe48dbae0a4c8ea15b09b1eaa8c
+    guid: 4a737bb8eca850940a8f05864434f140
   - enabled: 1
     path: Assets/Scenes/Settings.unity
-    guid: 400cce10a8b456e489db7a0698ff94cf
+    guid: 0f0c7989b19d4344baef1e4df3f5dfed
+  - enabled: 1
+    path: Assets/Scenes/Register.unity
+    guid: ae73a02078da379448c03d235fc8429a
   - enabled: 1
     path: Assets/Scenes/Missions.unity
-    guid: 2085f8e50636b8746903e653e45a238f
+    guid: 85a1cf54b28dc9449ad482297110f719
+  - enabled: 1
+    path: Assets/Scenes/InventoryDEMO.unity
+    guid: c0c2097a31a93d342ad70cd34c06bf6e
+  - enabled: 1
+    path: Assets/Scenes/AREnv.unity
+    guid: 18bd129c69dff1f44944fdfc9fa05438
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 0465d33c6aee55f44b0237db8b0e0259,
       type: 2}
-    com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000,
-      guid: de63c23438ce63e42acf06e723a18cd3, type: 2}
-    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
-      guid: 7570b76d5ebf8024b8dc5649146346e2, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c199e683398494f32b4cde18e73ab731,
       type: 2}
     com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 0b53a025a635a4393ba0b49822242280,
