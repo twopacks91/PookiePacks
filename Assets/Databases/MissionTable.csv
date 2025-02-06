@@ -1,6 +1,6 @@
 ID,Name,Details,Reward,Needed
-0,Go to UCLan,Head to the university student center,$20,6
-1,Win battles,Beat an opponent in battle,$20,3
-2,Open packs,Open any packs of your choosing,$20,4
-3,Block attacks,Block an opponent's attack,$25,15
-4,Pack Phaval,Good luck,$400,1
+0,Go to UCLan,Head to the university student center,20,6
+1,Win battles,Beat an opponent in battle,20,3
+2,Open packs,Open any packs of your choosing,20,4
+3,Block attacks,Block an opponent's attack,25,15
+4,Pack Phaval,Good luck,400,1

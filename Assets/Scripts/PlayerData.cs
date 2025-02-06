@@ -10,6 +10,7 @@ public class PlayerData
     // Class Variables
     private string mUsername;
     private string mPassword;
+    private int mMoney;
 
     private List<Item> mItems;
     private List<Character> mCharacters;
@@ -23,6 +24,7 @@ public class PlayerData
     {
         mUsername = username;
         mPassword = password;
+        mMoney = 10;
         mItems = new List<Item>(0);
         mCharacters = new List<Character>(0);
         mDoneMissions = new List<Mission>(0);
@@ -34,12 +36,15 @@ public class PlayerData
         foreach (string line in database)
         {
             string[] values = line.Split(',');
-            int id = int.Parse(values[0]);
-            string name = values[1];
-            string description = values[2];
-            string reward = values[3];
-            int needed = int.Parse(values[4]);
-            mToDoMissions.Add(new Mission(id, name, description, reward, needed, 0));
+            if (int.TryParse(values[0], out int dk))
+            {
+                int id = int.Parse(values[0]);
+                string name = values[1];
+                string description = values[2];
+                int reward = int.Parse(values[3]);
+                int needed = int.Parse(values[4]);
+                mToDoMissions.Add(new Mission(id, name, description, reward, needed, 0));
+            }
         }
     }
     // Default constructor - loads player using information stored
@@ -94,6 +99,21 @@ public class PlayerData
         return mDoneMissions;
     }
 
+    public int GetMoney()
+    {
+        return mMoney;
+    }
+
+    public void AddMoney(int mon)
+    {
+        mMoney += mon;
+    }
+
+    public void RemoveMoney(int mon)
+    {
+        mMoney -= mon;
+    }
+
     // *** Functions
     /// <summary>
     /// Saves player data into file system using SavePlayer static function
@@ -135,12 +155,15 @@ public class PlayerData
             foreach (string line in database)
             {
                 string[] values = line.Split(',');
-                int id = int.Parse(values[0]);
-                string name = values[1];
-                string description = values[2];
-                string reward = values[3];
-                int needed = int.Parse(values[4]);
-                mToDoMissions.Add(new Mission(id, name, description, reward, needed, 0));
+                if (int.TryParse(values[0], out int dk))
+                {
+                    int id = int.Parse(values[0]);
+                    string name = values[1];
+                    string description = values[2];
+                    int reward = int.Parse(values[3]);
+                    int needed = int.Parse(values[4]);
+                    mToDoMissions.Add(new Mission(id, name, description, reward, needed, 0));
+                }
             }
         }
         if (mDoneMissions == null)
