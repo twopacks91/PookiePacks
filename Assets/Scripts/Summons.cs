@@ -107,7 +107,8 @@ public class Summons : MonoBehaviour
     private bool GenerateCharacter(ref string[] characterData)
     {
         // Read summon database file, relative to current path
-        string databaseFile = Path.Combine(Application.dataPath, "Databases", "SummonTableDraft3.csv");
+        //string oldDatabaseFile = Path.Combine(Application.dataPath, "Databases", "SummonTableDraft3.csv");
+        string databaseFile = Path.Combine(Application.persistentDataPath, "SummonTableDraft3.csv");
         if (!File.Exists(databaseFile))
         {
             Debug.LogError($"Summon Error: Summon Database file not found at {databaseFile}");
@@ -252,7 +253,8 @@ public class Summons : MonoBehaviour
     private void ShowCharacterStats(string characterName, ref string[] statData)
     {
         // Get this character's stats from database
-        string databaseFile = Path.Combine(Application.dataPath, "Databases", "CharacterTableDraft1.csv");
+        //string oldDatabaseFile = Path.Combine(Application.dataPath, "Databases", "CharacterTableDraft1.csv");
+        string databaseFile = Path.Combine(Application.persistentDataPath, "CharacterTableDraft1.csv");
         if (!File.Exists(databaseFile))
         {
             // Mark text as NA for not available and return early

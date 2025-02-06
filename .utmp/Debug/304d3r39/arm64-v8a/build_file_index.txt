@@ -1,0 +1,2 @@
+C:\Users\hamza\Work\Uni\Year 2\CO2403 - The Agile Professional\Pookie Packs\Code\PookiePacks\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\hamza\Work\Uni\Year 2\CO2403 - The Agile Professional\Pookie Packs\Code\PookiePacks\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt
