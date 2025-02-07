@@ -109,3 +109,6 @@ local.properties
 
 # Emulator-related files
 .emulator_console_auth_token
+
+# IL2CPP debugging symbols for android
+*.symbols.zip
