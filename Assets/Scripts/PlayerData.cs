@@ -31,7 +31,7 @@ public class PlayerData
         mToDoMissions = new List<Mission>(0);
 
         // Read missions database file to load all missions into To-Do list with zero progress
-        string databaseFile = Path.Combine(Application.dataPath, "Databases", "MissionTable.csv");
+        string databaseFile = Path.Combine(Application.persistentDataPath, "MissionTable.csv");
         string[] database = File.ReadAllLines(databaseFile);
         foreach (string line in database)
         {
@@ -150,7 +150,7 @@ public class PlayerData
         if(mToDoMissions == null)
         {
             Debug.Log("todo empty");
-            string databaseFile = Path.Combine(Application.dataPath, "Databases", "MissionTable.csv");
+            string databaseFile = Path.Combine(Application.persistentDataPath, "MissionTable.csv");
             string[] database = File.ReadAllLines(databaseFile);
             foreach (string line in database)
             {

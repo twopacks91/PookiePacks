@@ -9,8 +9,10 @@ public class DatabaseManager : MonoBehaviour
     private string dbFolder = "Databases";
     private string summonDbName = "SummonTableDraft3.csv";
     private string characterDbName = "CharacterTableDraft1.csv";
+    private string missionDbName = "MissionTable.csv";
     private string newSummonDbPath;
     private string newCharacterDbPath;
+    private string newMissionDbPath;
 
     // This should run when app is first run, should attach to loading screen to ensure it happens
     void Awake()
@@ -30,6 +32,16 @@ public class DatabaseManager : MonoBehaviour
         {
             CopySummonDbToPersistentPath(originalCharacterDbPath, newCharacterDbPath);
         }
+
+        // Check for missions database
+        newMissionDbPath = Path.Combine(Application.persistentDataPath, this.missionDbName);
+        string originalMissionDbPath = Path.Combine(Application.streamingAssetsPath, dbFolder, missionDbName);
+        if (!File.Exists(newMissionDbPath))
+        {
+            CopySummonDbToPersistentPath(originalMissionDbPath, newMissionDbPath);
+        }
+
+
     }
 
     /// <summary>
