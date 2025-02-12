@@ -3,6 +3,7 @@ using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 public class LoadInventory : MonoBehaviour
@@ -91,29 +92,28 @@ public class LoadInventory : MonoBehaviour
             // Picture to display each item
             RawImage picture = itemCanvas.GetComponentsInChildren<RawImage>()[1];
 
-            for(int j = 0; j<characterNames.Count; j++)
+            string rarity = characters[i].GetRarity();
+            if (rarity == "Bronze")
             {
-                if(characterNames[j]==characters[i].GetName())
-                {
-                    picture.texture = itemTextures[j];
-                    if(characterRarities[j]=="Bronze")
-                    {
-                        
-                        background.color = new Color(139f/255f,69f/255f,19f/255f);
-                        Debug.Log("Was bronze");
-                    }
-                    else if(characterRarities[j]=="Silver")
-                    {
-                        background.color = new Color(220f/255f,220f/255f,220f/255f);
-                        Debug.Log("Was silver");
-                    }
-                    else if(characterRarities[j]=="Gold")
-                    {
-                        background.color = new Color(128f/255f,0f/255f,128f/255f);
-                        Debug.Log("Was gold");
-                    }
-                }
+                background.color = new Color(139f / 255f, 69f / 255f, 19f / 255f);
+                Debug.Log("Was bronze");
             }
+            else if (rarity == "Silver")
+            {
+                background.color = new Color(220f / 255f, 220f / 255f, 220f / 255f);
+                Debug.Log("Was silver");
+            }
+            else if (rarity == "Gold")
+            {
+                background.color = new Color(128f / 255f, 0f / 255f, 128f / 255f);
+                Debug.Log("Was gold");
+            }
+            else
+            {
+                background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
+            }
+            Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characters[i].GetImage()}");
+            picture.texture = sprite.texture;
             //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;
             // Text to contain item name
             TMPro.TextMeshProUGUI itemName = itemCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
