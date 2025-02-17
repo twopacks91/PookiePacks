@@ -17,7 +17,7 @@ public class Profile : MonoBehaviour
 
     public void Start()
     {
-        data = new PlayerData();
+        data = PlayerData.GetInstance();
         UsernameTxt.text = "Username: " + data.GetUsername();
     }
 

@@ -7,7 +7,7 @@ public class UpdateMoney : MonoBehaviour
     void Start()
     {
         TextMeshProUGUI text = this.GetComponent<TextMeshProUGUI>();
-        PlayerData playerData = new PlayerData();
+        PlayerData playerData = PlayerData.GetInstance();
         text.text = '$' + playerData.GetMoney().ToString();
     }
 

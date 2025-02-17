@@ -38,7 +38,7 @@ public class LoginManager : MonoBehaviour
             // Ensure player exists and save data
             try
             {
-                PlayerData player = new PlayerData();
+                PlayerData player = PlayerData.GetInstance();
                 // Save Player Data
                 player.SetUsername(username);
                 player.SetPassword(password);

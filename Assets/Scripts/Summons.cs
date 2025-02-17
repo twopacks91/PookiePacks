@@ -239,7 +239,7 @@ public class Summons : MonoBehaviour
         Character newChar = new Character(characterImageName, characterName, statList);
 
         // Get current player data and insert new character into their inventory
-        PlayerData currentPlayer = new PlayerData();
+        PlayerData currentPlayer = PlayerData.GetInstance();
         currentPlayer.InsertCharacter(newChar);
         currentPlayer.SavePlayer();
     }
