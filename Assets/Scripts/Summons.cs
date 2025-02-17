@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
+using Unity.Collections;
+using UnityEditor.U2D.Animation;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -18,12 +22,16 @@ public class Summons : MonoBehaviour
     private const float kSphereBottomDelay = 3.0f;
     private const float kScreenSplashDelay = 3.5f;
 
-    private const int kCharacterName = 1;  // for summon and character database
+    // - - First line for both databases should be ignored, last line for summon database should be ignored
+    // Summon Database Format (5): ID - Character Name - Character Image Name - Rarity - Rate
+    // Character Database Format (5): ID - Character Name - Rarity - HP - Attack - Defence
+    private const int kCharacterName = 1;       // for summon and character database
     private const int kCharacterImageName = 2;  // for summon database only
-    private const int kCharacterRarity = 3;  // for summon database only
-    private const int kStatHP = 3;  // for character database only
-    private const int kStatAttack = 4;  // for character database only
-    private const int kStatDefence = 5;  // for character database only
+    private const int kCharacterRarity = 3;     // for summon database only
+    private const int kCharacterRate = 4;       // for summon database only
+    private const int kStatHP = 3;              // for character database only
+    private const int kStatAttack = 4;          // for character database only
+    private const int kStatDefence = 5;         // for character database only
 
     private const string kRarityBronze = "bronze";
     private const string kRaritySilver = "silver";
@@ -59,6 +67,38 @@ public class Summons : MonoBehaviour
     private TextMeshProUGUI attackText;
     [SerializeField]
     private TextMeshProUGUI defenceText;
+
+    // Rates Content
+    [SerializeField]
+    private GameObject ratesPanel;
+    [SerializeField]
+    private TextMeshProUGUI ratesErrorText;
+    [SerializeField]
+    private Transform listContainer;
+    [SerializeField]
+    private GameObject characterItemPrefab;
+
+    // *** Structs
+    private struct CharacterData
+    {
+        public string name;         // Character Name
+        public string imagePath;    // Image Asset Name
+        public string rate;         // Drop Rate
+        public string rarity;       // Rarity
+        public List<string> stats;  // Character Stats (remember - from character database)
+
+        // Constructor
+        public CharacterData(string name, string imagePath, string rate, string rarity, List<string> stats)
+        {
+            this.name = name;
+            this.imagePath = imagePath;
+            this.rate = rate;
+            this.rarity = rarity;
+            this.stats = stats;
+        }
+    }
+
+
 
     // *** Functions
     /// <summary>
@@ -342,5 +382,141 @@ public class Summons : MonoBehaviour
         // Enable selection canvas, disabling the rest
         conclusionCanvas.gameObject.SetActive(false);
         selectionCanvas.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Shows the rates for current summon available for each character, also shows more in-depth information when character is clicked.
+    /// </summary>
+    public void ShowRates()
+    {
+        // Show rates panel
+        ratesPanel.SetActive(true);
+
+        // Get a list of all characters for this summmon
+        List<CharacterData> characters = new List<CharacterData>();
+        string result = LoadCharacterRates("SummonTableDraft3.csv",ref characters);
+        if (result != "")
+        {
+            // Show error to user on screen
+            ratesErrorText.text = result;
+            return;
+        }
+
+        Debug.Log($"BEFORE characters in list: {characters.Count}");
+
+        // Sort in order of rarity (highest rarity on top, so lowest rates in front of list)
+        characters.Sort((a, b) => float.Parse(a.rate).CompareTo(float.Parse(b.rate)));
+
+        // Create a heading on list container
+        GameObject headingItem = Instantiate(characterItemPrefab, listContainer);
+        headingItem.SetActive(true);
+
+        // Get the text components from prefab so they can be updated for this character
+        TextMeshProUGUI headingName = headingItem.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI headingRarity = headingItem.transform.Find("RarityText").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI headingRate = headingItem.transform.Find("RateText").GetComponent<TextMeshProUGUI>();
+
+        // Update text components with this character's information
+        headingName.text = "Character Name";
+        headingRarity.text = "Rarity";
+        headingRate.text = "Drop Rate";
+
+        // Display characters on panel
+        foreach (CharacterData character in characters)
+        {
+            // Make an item using custom prefab I made and add it to the list container
+            GameObject item = Instantiate(characterItemPrefab, listContainer);
+            item.SetActive(true);
+
+            // Get the text components from prefab so they can be updated for this character
+            TextMeshProUGUI nameText = item.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI rarityText = item.transform.Find("RarityText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI rateText = item.transform.Find("RateText").GetComponent<TextMeshProUGUI>();
+
+            // Update text components with this character's information
+            nameText.text = character.name;
+            rarityText.text = character.rarity;
+            rateText.text = character.rate + "%";
+
+            // Add functionality to the button component
+            Button button = item.transform.Find("ButtonBackground").GetComponent<Button>();
+            button.onClick.AddListener(() => ShowCharacter(character));
+        }
+    }
+
+    private void ShowCharacter(CharacterData character)
+    {
+        Debug.Log($"Clicked for {character.name}");
+    }
+
+    /// <summary>
+    /// Closes rates panel, called by close button on panel.
+    /// </summary>
+    public void CloseRatesPanel()
+    {
+        ratesPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Load up all character information, including rates, stats and stats for every character for this particular summon.
+    /// </summary>
+    /// <param name="summonDbName"> string database name containing data of character which can be summoned </param>
+    /// <param name="characters"> list of character database passed by reference which will be updated with data obtained </param>
+    /// <returns></returns>
+    private string LoadCharacterRates(string summonDbName, ref List<CharacterData> characters)
+    {
+        // Get rates from summon database
+        string databaseFile = Path.Combine(Application.persistentDataPath, summonDbName);
+        if (!File.Exists(databaseFile))
+        {
+            Debug.LogError($"Summon Error: Summon Database file not found at {databaseFile}");
+            return "Error: Summon database could not be found. We suggest you reload the application.";
+        }
+        string[] summonDb = File.ReadAllLines(databaseFile);
+
+        // Get character database information
+        string characterFile = Path.Combine(Application.persistentDataPath, "CharacterTableDraft1.csv");
+        if (!File.Exists(characterFile))
+        {
+            // Mark text as NA for not available and return early
+            Debug.LogError($"Summon Error: Character database file not found at {characterFile}");
+            return "Error: Character database could not be found. We suggest you reload the application.";
+        }
+        string[] characterDb = File.ReadAllLines(characterFile);
+
+        // Fill character list with characters
+        for (int i = 1; i < (summonDb.Length - 1); i++)
+        {
+            string[] summonDbValues = summonDb[i].Split(',');
+            List<string> characterStats = new List<string>();
+
+            // Find this character's stats in character database
+            for (int j = 1; j < characterDb.Length; j++)
+            {
+                string[] data = characterDb[j].Split(',');
+                if (summonDbValues[kCharacterName] == data[kCharacterName])
+                {
+                    characterStats.Add(data[kStatHP]);
+                    characterStats.Add(data[kStatAttack]);
+                    characterStats.Add(data[kStatDefence]);
+                    break;
+                }
+            }
+
+            // No character stats found, show user error
+            if (characterStats.Count == 0)
+            {
+                Debug.LogError($"Summon Error: Could not find stats in character database for this character: {summonDbValues[kCharacterName]}");
+                return "Error: Could not find stats for a certain character, we suggest reloading the app.";
+            }
+
+            // Add character to database list
+            CharacterData characterData = new CharacterData(summonDbValues[kCharacterName], summonDbValues[kCharacterImageName], 
+                summonDbValues[kCharacterRate], summonDbValues[kCharacterRarity], characterStats);
+            characters.Add(characterData);
+        }
+
+        // Successful with empty return
+        return "";
     }
 }
