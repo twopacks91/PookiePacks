@@ -1,19 +1,22 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class UpdateMoney : MonoBehaviour
+public class AnotherUpdateMoney : MonoBehaviour
 {
+    // *** ADAPTED KAI's CODE!!!!!!!!! ***
+    [SerializeField]
+    private TextMeshProUGUI currencyText;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        TextMeshProUGUI text = this.GetComponent<TextMeshProUGUI>();
         PlayerData playerData = PlayerData.GetInstance();
-        text.text = '$' + playerData.GetMoney().ToString();
+        currencyText.text = '$' + playerData.GetMoney().ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

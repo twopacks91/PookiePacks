@@ -43,7 +43,7 @@ public class LoadInventory : MonoBehaviour
     };
     void Start()
     {
-        PlayerData playerData = new PlayerData();
+        PlayerData playerData = PlayerData.GetInstance();
         characters = playerData.GetCharacters();
         int itemCount = characters.Count;
 

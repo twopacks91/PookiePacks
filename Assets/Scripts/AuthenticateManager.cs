@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using System.Text.RegularExpressions;
+using System;
 
 public class LoginManager : MonoBehaviour
 {
@@ -34,11 +35,21 @@ public class LoginManager : MonoBehaviour
         {
             Debug.Log("Successful Login!");
 
-            // Save Player Data
-            PlayerData player = new PlayerData();
-            player.SetUsername(username);
-            player.SetPassword(password);
-            player.SavePlayer();
+            // Ensure player exists and save data
+            try
+            {
+                PlayerData player = PlayerData.GetInstance();
+                // Save Player Data
+                player.SetUsername(username);
+                player.SetPassword(password);
+                player.SavePlayer();
+            }
+            catch (NullReferenceException exception)
+            {
+                Debug.LogError($"Error while tryna login - {exception.Message}");
+                errorText.text = "ERROR: Perhaps you have not registered yet, click Register.";
+                return;
+            }
 
             // Load Home Screen
             SceneManager.LoadScene("Home");

@@ -8,6 +8,8 @@ using System.IO;
 public class PlayerData
 {
     // Class Variables
+    public static PlayerData instance = null;
+
     private string mUsername;
     private string mPassword;
     private int mMoney;
@@ -16,6 +18,17 @@ public class PlayerData
     private List<Character> mCharacters;
     private List<Mission> mToDoMissions;
     private List<Mission> mDoneMissions;
+
+
+    // *** Initaliser as a singleton - USE THIS
+    public static PlayerData GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new PlayerData();
+        }
+        return instance;
+    }
 
 
     // *** Constructors - (uncommented for now UNTIL required - UPDATE it is now required - Hamza)
@@ -48,7 +61,7 @@ public class PlayerData
         }
     }
     // Default constructor - loads player using information stored
-    public PlayerData()
+    private PlayerData()
     {
         this.LoadPlayer();
     }
