@@ -435,7 +435,7 @@ public class Summons : MonoBehaviour
 
             // Update text components with this character's information
             nameText.text = character.name;
-            rarityText.text = character.rarity;
+            rarityText.text = character.rarity.ToUpper();
             rateText.text = character.rate + "%";
 
             // Add functionality to the button component
