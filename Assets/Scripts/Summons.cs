@@ -78,6 +78,19 @@ public class Summons : MonoBehaviour
     [SerializeField]
     private GameObject characterItemPrefab;
 
+    // Character Image Panel
+    [SerializeField]
+    private GameObject imagePanel;
+    [SerializeField]
+    private RawImage imagePanelBackground;
+    [SerializeField]
+    private TextMeshProUGUI hpPanelText;
+    [SerializeField]
+    private TextMeshProUGUI attackPanelText;
+    [SerializeField]
+    private TextMeshProUGUI defencePanelText;
+
+
     // *** Structs
     private struct CharacterData
     {
@@ -444,9 +457,29 @@ public class Summons : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Display another panel with the character background image as well as thier stats to user.
+    /// </summary>
+    /// <param name="character"> struct containing necessary character details for the one to be displayed </param>
     private void ShowCharacter(CharacterData character)
     {
-        Debug.Log($"Clicked for {character.name}");
+        // Give character background image to panel
+        Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{character.imagePath}");
+        if (sprite == null)
+        {
+            // Log error and show replacement image if sprite not found
+            Debug.Log($"Summon Error - Couldn't load summon sprite at file path: Images/Summons/{character.imagePath}");
+            sprite = Resources.Load<Sprite>($"Images/Summons/image_not_found");
+        }
+        imagePanelBackground.texture = sprite.texture;
+
+        // Update panel to include character stats
+        hpPanelText.text = character.stats[0];
+        attackPanelText.text = character.stats[1];
+        defencePanelText.text = character.stats[2];
+
+        // Open image panel for display to user
+        imagePanel.SetActive(true);
     }
 
     /// <summary>
@@ -455,6 +488,14 @@ public class Summons : MonoBehaviour
     public void CloseRatesPanel()
     {
         ratesPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Close image panel (on top of rates) called by close button on panel
+    /// </summary>
+    public void CloseImagePane()
+    {
+        imagePanel.SetActive(false);
     }
 
     /// <summary>
