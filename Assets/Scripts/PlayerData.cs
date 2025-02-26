@@ -18,6 +18,7 @@ public class PlayerData
     private List<Character> mCharacters;
     private List<Mission> mToDoMissions;
     private List<Mission> mDoneMissions;
+    private List<Setting> mSettings;
 
 
     // *** Initaliser as a singleton - USE THIS
@@ -42,9 +43,11 @@ public class PlayerData
         mCharacters = new List<Character>(0);
         mDoneMissions = new List<Mission>(0);
         mToDoMissions = new List<Mission>(0);
+        mSettings = new List<Setting>(0);
 
         // Read missions database file to load all missions into To-Do list with zero progress
         string databaseFile = Path.Combine(Application.persistentDataPath, "MissionTable.csv");
+        Debug.Log(databaseFile);
         string[] database = File.ReadAllLines(databaseFile);
         foreach (string line in database)
         {
@@ -57,6 +60,21 @@ public class PlayerData
                 int reward = int.Parse(values[3]);
                 int needed = int.Parse(values[4]);
                 mToDoMissions.Add(new Mission(id, name, description, reward, needed, 0));
+            }
+        }
+
+        databaseFile = Path.Combine(Application.persistentDataPath, "SettingsTable.csv");
+        Debug.Log(databaseFile);
+        database = File.ReadAllLines(databaseFile);
+        foreach (string line in database)
+        {
+            string[] values = line.Split(',');
+            if (int.TryParse(values[0], out int dk))
+            {
+                int id = int.Parse(values[0]);
+                string name = values[1];
+                string description = values[2];
+                mSettings.Add(new Setting(id,name,description,false));
             }
         }
     }
@@ -112,6 +130,11 @@ public class PlayerData
         return mDoneMissions;
     }
 
+    public List<Setting> GetSettings()
+    {
+        return mSettings;
+    }
+
     public int GetMoney()
     {
         return mMoney;
@@ -150,6 +173,7 @@ public class PlayerData
         mCharacters = data.mCharacters;
         mToDoMissions = data.mToDoMissions;
         mDoneMissions = data.mDoneMissions;
+        mSettings = data.mSettings;
 
         // When empty, initialise to prevent null exceptions
         if (mCharacters == null)
@@ -162,8 +186,9 @@ public class PlayerData
         }
         if(mToDoMissions == null)
         {
-            Debug.Log("todo empty");
+            
             string databaseFile = Path.Combine(Application.persistentDataPath, "MissionTable.csv");
+
             string[] database = File.ReadAllLines(databaseFile);
             foreach (string line in database)
             {
@@ -182,6 +207,22 @@ public class PlayerData
         if (mDoneMissions == null)
         {
             mDoneMissions = new List<Mission>();
+        }
+        if(mSettings == null)
+        {
+            string databaseFile = Path.Combine(Application.persistentDataPath, "SettingsTable.csv");
+            string[] database = File.ReadAllLines(databaseFile);
+            foreach (string line in database)
+            {
+                string[] values = line.Split(',');
+                if (int.TryParse(values[0], out int dk))
+                {
+                    int id = int.Parse(values[0]);
+                    string name = values[1];
+                    string description = values[2];
+                    mSettings.Add(new Setting(id, name, description, false));
+                }
+            }
         }
 
     }
