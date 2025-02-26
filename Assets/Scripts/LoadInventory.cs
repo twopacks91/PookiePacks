@@ -143,13 +143,15 @@ public class LoadInventory : MonoBehaviour
     // Method to be called when an item is pressed, changes to ItemViewer canvas and updates its children
     private void OnItemClick(int itemIndex)
     {
-        RawImage itemImage = itemViewerCanvas.transform.GetComponentInChildren<RawImage>();
-        TMPro.TextMeshProUGUI itemNameText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
-        TMPro.TextMeshProUGUI itemDescriptionText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
+        RawImage itemImage = itemViewerCanvas.transform.GetComponentsInChildren<RawImage>()[1];
+        //TMPro.TextMeshProUGUI itemNameText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
+        TMPro.TextMeshProUGUI itemDescriptionText = itemViewerCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
         Button equipButton = itemViewerCanvas.GetComponentsInChildren<Button>()[0];
 
+        Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characters[itemIndex].GetImage()}");
+        itemImage.texture = sprite.texture;
         //itemImage.texture = characters[itemIndex].GetImage(); // FIX THIS FINNNNN
-        itemNameText.text = characters[itemIndex].GetName();
+        //itemNameText.text = characters[itemIndex].GetName();
         itemDescriptionText.text = "";
         List<string> attributes = characters[itemIndex].GetAttributes();
         foreach(string s in attributes)
@@ -157,18 +159,28 @@ public class LoadInventory : MonoBehaviour
             itemDescriptionText.text += s + '\n';
         }
         
-        // Change button text and colour based on if item is equipped
-        bool isEquipped = true;
+
         
-        if(isEquipped)
+        bool isEquipped = characters[itemIndex].IsEquipped();
+
+        // Remove previously added listeners to refresh them
+        equipButton.onClick.RemoveAllListeners();
+
+        // Change button text and colour based on if item is equipped
+        // Also add listener to button to be able to equip/unequip a character
+        if (isEquipped)
         {
             equipButton.GetComponent<Image>().color = Color.red;
             equipButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Unequip";
+            int index = itemIndex;
+            equipButton.onClick.AddListener(() => OnEquipClick(index, false));
         }
         else
         {
             equipButton.GetComponent<Image>().color = Color.green;
             equipButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Equip";
+            int index = itemIndex;
+            equipButton.onClick.AddListener(() => OnEquipClick(index, true));
         }
 
         // Change to ItemViewer
@@ -176,4 +188,24 @@ public class LoadInventory : MonoBehaviour
         itemViewerCanvas.transform.gameObject.SetActive(true);
         
     }
+
+    private void OnEquipClick(int index, bool setEquipped)
+    {
+        if(setEquipped)
+        {
+            foreach (Character character in characters)
+            {
+                character.Dequip();
+            }
+            characters[index].Equip();
+        }
+        else
+        {
+            characters[index].Dequip();
+        }
+        PlayerData pd = PlayerData.GetInstance();
+        pd.SavePlayer();
+        OnItemClick(index);
+    }
+
 }

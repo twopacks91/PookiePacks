@@ -11,8 +11,8 @@ public class ApplyThemeToCanvas : MonoBehaviour
     [SerializeField]
     private Texture2D background;
 
-    //[SerializeField]
-    //private List<>
+    [SerializeField]
+    private List<GameObject> themeExemptions;
 
     private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();
     private List<RawImage> rawImageList = new List<RawImage>();
@@ -107,19 +107,39 @@ public class ApplyThemeToCanvas : MonoBehaviour
     private List<T> GetAllComponents<T>(Transform parent) where T : Component
     {
         List<T> resultList = new List<T>();
-
-        foreach (Transform child in parent)
+        if(themeExemptions==null)
         {
-            T component = child.GetComponent<T>();
-            if (component != null)
+            foreach (Transform child in parent)
             {
-                resultList.Add(component);
+                T component = child.GetComponent<T>();
+                if (component != null)
+                {
+                    resultList.Add(component);
+                }
+
+                // Recursively search in children
+                resultList.AddRange(GetAllComponents<T>(child));
             }
 
-            // Recursively search in children
-            resultList.AddRange(GetAllComponents<T>(child));
+            return resultList;
         }
+        else
+        {
+            foreach (Transform child in parent)
+            {
+                if(!themeExemptions.Contains(child.gameObject))
+                {
+                    T component = child.GetComponent<T>();
+                    if (component != null)
+                    {
+                        resultList.Add(component);
+                    }
 
-        return resultList;
+                    // Recursively search in children
+                    resultList.AddRange(GetAllComponents<T>(child));
+                }
+            }
+            return resultList;
+        }
     }
 }
