@@ -301,6 +301,8 @@ MonoBehaviour:
   settingCardPrefab: {fileID: 6751139309919452187, guid: 3267447f84c18d44ab10c3ff4ce6dc1b,
     type: 3}
   itemContainer: {fileID: 1748812396}
+  enabledImage: {fileID: 2800000, guid: 0b20b01ab24230d46a8eb5860fb5dfd3, type: 3}
+  disabledImage: {fileID: 2800000, guid: d9f6de068f040f24e8eba39e6906423a, type: 3}
 --- !u!114 &371575391
 MonoBehaviour:
   m_ObjectHideFlags: 0

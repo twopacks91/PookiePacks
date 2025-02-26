@@ -46,13 +46,12 @@ public class DatabaseManager : MonoBehaviour
         }
 
         // Check for settings database
-        // **** UNCOMMENT THIS KAI !!!!!!!!!!!!!!!!! ************* (and make sure the variable for settingsDbName is same as your database name in streaming assets)
-        //newSettingsDbPath = Path.Combine(Application.persistentDataPath, this.settingsDbName);
-        //string originalSettingsDbPath = Path.Combine(Application.streamingAssetsPath, dbFolder, settingsDbName);
-        //if(!File.Exists(newSettingsDbPath))
-        //{
-        //    CopySummonDbToPersistentPath(originalSettingsDbPath, newSettingsDbPath);
-        //}
+        newSettingsDbPath = Path.Combine(Application.persistentDataPath, this.settingsDbName);
+        string originalSettingsDbPath = Path.Combine(Application.streamingAssetsPath, dbFolder, settingsDbName);
+        if(!File.Exists(newSettingsDbPath))
+        {
+            CopySummonDbToPersistentPath(originalSettingsDbPath, newSettingsDbPath);
+        }
 
     }
 

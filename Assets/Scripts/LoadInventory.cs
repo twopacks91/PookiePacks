@@ -112,6 +112,7 @@ public class LoadInventory : MonoBehaviour
             {
                 background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
             }
+            
             Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characters[i].GetImage()}");
             picture.texture = sprite.texture;
             //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;

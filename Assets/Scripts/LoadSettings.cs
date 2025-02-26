@@ -34,18 +34,25 @@ public class LoadSettings : MonoBehaviour
     [SerializeField]
     private RectTransform itemContainer;
 
+    [SerializeField]
+    private Texture2D enabledImage;
+    [SerializeField]
+    private Texture2D disabledImage;
+
     private List<Canvas> settingsCards;
 
     private PlayerData playerData;
 
     private List<Setting> settings;
 
+
+
     private const int padding = 50;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         settingsCards = new List<Canvas>(0);
-        playerData = PlayerData.GetInstance();
+        PlayerData playerData = PlayerData.GetInstance();
         settings = playerData.GetSettings();
         LoadSettingsList();
 
@@ -56,22 +63,23 @@ public class LoadSettings : MonoBehaviour
     {
         Setting setting = settings[index];
 
-        Debug.Log("Changed \"" + setting.name + "\" to " + (setting.enabled ? "enabled" : "disabled"));
+        Debug.Log("Changed \"" + setting.name + "\" to " + (setting.enabled ? "disabled" : "enabled"));
         if(setting.enabled)
         {
             setting.enabled = false;
             Button toggleButton = settingsCards[index].GetComponentsInChildren<Button>()[0];
-            RawImage buttonImage = toggleButton.GetComponent<RawImage>();
-            buttonImage.color = new Color(1.0f, 0.0f, 0.0f);
+            
+            RawImage buttonImage = toggleButton.transform.GetChild(0).GetComponent<RawImage>();
+            buttonImage.texture = (setting.enabled ? enabledImage : disabledImage);
         }
         else
         {
             setting.enabled = true;
             Button toggleButton = settingsCards[index].GetComponentsInChildren<Button>()[0];
-            RawImage buttonImage = toggleButton.GetComponent<RawImage>();
-            buttonImage.color = new Color(0.0f, 1.0f, 0.0f);
+            RawImage buttonImage = toggleButton.transform.GetChild(0).GetComponent<RawImage>();
+            buttonImage.texture = (setting.enabled ? enabledImage : disabledImage);
         }
-        
+        playerData.SavePlayer();
     }
 
     public void LoadSettingsList()
@@ -108,12 +116,12 @@ public class LoadSettings : MonoBehaviour
             TextMeshProUGUI settingName = settingCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[0];
             TextMeshProUGUI settingDescription = settingCanvas.GetComponentsInChildren<TMPro.TextMeshProUGUI>()[1];
             Button toggleButton = settingCanvas.GetComponentsInChildren<Button>()[0];
-            RawImage buttonImage = toggleButton.GetComponent<RawImage>();
+            RawImage buttonImage = toggleButton.transform.GetChild(0).GetComponent<RawImage>();
 
             // Assign gameObjects with relevant information
             settingName.text = setting.name;
             settingDescription.text = setting.description;
-            buttonImage.color = (setting.enabled? Color.green : Color.red);
+            buttonImage.texture = (setting.enabled? enabledImage : disabledImage);
             int index = row;
             toggleButton.onClick.AddListener(() => OnSettingClick(index));
 
