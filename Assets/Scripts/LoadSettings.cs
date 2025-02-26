@@ -36,8 +36,12 @@ public class LoadSettings : MonoBehaviour
 
     [SerializeField]
     private Texture2D enabledImage;
+
     [SerializeField]
     private Texture2D disabledImage;
+
+    [SerializeField]
+    private GameObject themeApplicator;
 
     private List<Canvas> settingsCards;
 
@@ -62,6 +66,7 @@ public class LoadSettings : MonoBehaviour
     private void OnSettingClick(int index)
     {
         Setting setting = settings[index];
+        PlayerData pd = PlayerData.GetInstance();
 
         Debug.Log("Changed \"" + setting.name + "\" to " + (setting.enabled ? "disabled" : "enabled"));
         if(setting.enabled)
@@ -79,7 +84,8 @@ public class LoadSettings : MonoBehaviour
             RawImage buttonImage = toggleButton.transform.GetChild(0).GetComponent<RawImage>();
             buttonImage.texture = (setting.enabled ? enabledImage : disabledImage);
         }
-        playerData.SavePlayer();
+        pd.SavePlayer();
+        themeApplicator.GetComponent<ApplyThemeToCanvas>().Refresh();
     }
 
     public void LoadSettingsList()

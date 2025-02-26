@@ -36,6 +36,9 @@ public class LoadMissions : MonoBehaviour
     [SerializeField]
     private Canvas missionCardPrefab;
 
+    [SerializeField]
+    private GameObject themeApplicator;
+
     private List<Canvas> missionCards = new List<Canvas>(0); // Stores all the mission card objects
 
     private List<Mission> ToDoMissions;
@@ -143,6 +146,7 @@ public class LoadMissions : MonoBehaviour
         itemContainer.sizeDelta = new Vector2(1080, newHeight + 480);
         // Move container down after height change for proper alignment
         itemContainer.localPosition = new Vector2(0, -newHeight / 2);
+        themeApplicator.GetComponent<ApplyThemeToCanvas>().FullRefresh();
     }
 
     public void LoadDoneList()
@@ -201,6 +205,7 @@ public class LoadMissions : MonoBehaviour
         itemContainer.sizeDelta = new Vector2(1080, newHeight + 480);
         // Move container down after height change for proper alignment
         itemContainer.localPosition = new Vector2(0, -newHeight / 2);
+        themeApplicator.GetComponent<ApplyThemeToCanvas>().FullRefresh();
     }
 
     long GetUnixTimestamp()
