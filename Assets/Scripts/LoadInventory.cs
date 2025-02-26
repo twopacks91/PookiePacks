@@ -9,11 +9,12 @@ using UnityEngine.UI;
 public class LoadInventory : MonoBehaviour
 {
     [SerializeField]
+    private RectTransform itemContainer;
+
+    [SerializeField]
     private Texture2D defaultTexture;    // Default texture for item pictures
     [SerializeField]
     private Canvas itemCardPrefab;      // Prefab for each item card
-    [SerializeField]
-    private List<Texture2D> itemTextures;
 
     [SerializeField]
     private Canvas itemViewerCanvas;    // Canvas to switch to when item pressed
@@ -22,33 +23,11 @@ public class LoadInventory : MonoBehaviour
 
     private List<Character> characters;
 
-    private List<string> characterNames = new List<string> 
-    { 
-        "Mercenary", 
-        "Flamer",
-        "Space Soldier", 
-        "Crabby", 
-        "Bonkzilla", 
-        "Demon Girl" 
-    };
-
-    private List<string> characterRarities = new List<string> 
-    { 
-        "Bronze", 
-        "Bronze",
-        "Bronze", 
-        "Silver", 
-        "Silver", 
-        "Gold" 
-    };
     void Start()
     {
         PlayerData playerData = PlayerData.GetInstance();
         characters = playerData.GetCharacters();
         int itemCount = characters.Count;
-
-
-        
 
         // If no characters are present, do nothing
         // We SHOULD indicate to the player their inventory is empty
@@ -65,15 +44,18 @@ public class LoadInventory : MonoBehaviour
         float canvasHeight = itemCardPrefab.GetComponent<RectTransform>().rect.height;
         float canvasWidth = itemCardPrefab.GetComponent<RectTransform>().rect.width;
 
-        RectTransform itemContainer = (RectTransform)this.transform.Find("ItemContainer");
+        
 
         // Resize the height of the item container acording to how many items are being displayed
-        float newHeight=1920.0f;
-        if(itemCount/2>=3)
+        float newHeight=2400.0f;
+        if(itemCount>4)
         {
-            for(int i = 0;i<(itemCount/2)-2;i++)
+            for(int i = 0;i<itemCount-4;i++)
             {
-                newHeight += padding+canvasHeight;
+                if(i%2==0)
+                {
+                    newHeight += padding + canvasHeight;
+                }
             }
         }
         itemContainer.sizeDelta = new Vector2(1080,newHeight);
@@ -85,34 +67,40 @@ public class LoadInventory : MonoBehaviour
         {
             // Create new canvas gameobject from item view prefab and add to itemContainer as child
             Canvas itemCanvas = Instantiate(itemCardPrefab,itemContainer);
-            
+
             // Background image for each "card"
-            RawImage background = itemCanvas.GetComponentsInChildren<RawImage>()[0];
-            //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;
+            RawImage background = itemCanvas.transform.Find("Background").GetComponent<RawImage>();
+
             // Picture to display each item
             RawImage picture = itemCanvas.GetComponentsInChildren<RawImage>()[1];
 
             string rarity = characters[i].GetRarity();
-            if (rarity == "Bronze")
+            Debug.Log(rarity);
+            if (rarity == "bronze")
             {
-                background.color = new Color(139f / 255f, 69f / 255f, 19f / 255f);
-                Debug.Log("Was bronze");
+                background.color = new Color(139.0f / 255.0f, 69.0f / 255.0f, 19.0f / 255.0f);
             }
-            else if (rarity == "Silver")
+            else if (rarity == "silver")
             {
-                background.color = new Color(220f / 255f, 220f / 255f, 220f / 255f);
-                Debug.Log("Was silver");
+                background.color = new Color(220.0f / 255.0f, 220.0f / 255.0f, 220.0f / 255.0f);
             }
-            else if (rarity == "Gold")
+            else if (rarity == "gold")
             {
-                background.color = new Color(128f / 255f, 0f / 255f, 128f / 255f);
-                Debug.Log("Was gold");
+                background.color = new Color(128.0f / 255.0f, 0.0f / 255.0f, 128.0f / 255.0f);
+            }
+            else if (rarity == "diamond")
+            {
+                background.color = new Color(185.0f / 255.0f, 242.0f / 255.0f, 255.0f / 255.0f);
+            }
+            else if (rarity == "legendary")
+            {
+                background.color = new Color(89.0f / 255.0f, 70.0f / 255.0f, 178.0f / 255.0f);
             }
             else
             {
-                background.color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
+                background.color = new Color(255.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
             }
-            
+
             Sprite sprite = Resources.Load<Sprite>($"Images/Summons/{characters[i].GetImage()}");
             picture.texture = sprite.texture;
             //itemCanvas.transform.Find("Background").GetComponent<RawImage>().color = Color.black;

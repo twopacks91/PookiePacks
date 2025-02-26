@@ -18,6 +18,7 @@ public class Character
         this.itemImage = image;
         this.itemName = name;
         this.itemAttributes = attributes;
+        this.rarity = image.Split('_')[0];
         this.equippedItems = new List<Item>(0);
     }
 
