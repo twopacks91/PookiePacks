@@ -11,6 +11,9 @@ public class ApplyThemeToCanvas : MonoBehaviour
     [SerializeField]
     private Texture2D background;
 
+    //[SerializeField]
+    //private List<>
+
     private List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();
     private List<RawImage> rawImageList = new List<RawImage>();
     private List<Image> imageList = new List<Image>();
