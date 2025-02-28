@@ -12,15 +12,33 @@ public class Character
     private int defence;
     private List<string> itemAttributes;
     private List<Item> equippedItems;
+    private bool isEquippedCharacter;
 
     public Character(string image, string name, List<string> attributes)
     {
         this.itemImage = image;
         this.itemName = name;
         this.itemAttributes = attributes;
+        this.rarity = image.Split('_')[0];
         this.equippedItems = new List<Item>(0);
+        this.isEquippedCharacter = false;
     }
 
+    public bool IsEquipped()
+    {
+        return isEquippedCharacter;
+    }
+
+    public void Equip()
+    {
+        isEquippedCharacter = true;
+        PlayerData.GetInstance().SetEquippedCharacter(this);
+    }
+
+    public void Dequip()
+    {
+        isEquippedCharacter = false;
+    }
     public string GetRarity()
     {
         return rarity;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,9 +11,12 @@ public class DatabaseManager : MonoBehaviour
     private string summonDbName = "SummonTableDraft3.csv";
     private string characterDbName = "CharacterTableDraft1.csv";
     private string missionDbName = "MissionTable.csv";
+    private string settingsDbName = "SettingsTable.csv";
+
     private string newSummonDbPath;
     private string newCharacterDbPath;
     private string newMissionDbPath;
+    private string newSettingsDbPath;
 
     // This should run when app is first run, should attach to loading screen to ensure it happens
     void Awake()
@@ -41,6 +45,13 @@ public class DatabaseManager : MonoBehaviour
             CopySummonDbToPersistentPath(originalMissionDbPath, newMissionDbPath);
         }
 
+        // Check for settings database
+        newSettingsDbPath = Path.Combine(Application.persistentDataPath, this.settingsDbName);
+        string originalSettingsDbPath = Path.Combine(Application.streamingAssetsPath, dbFolder, settingsDbName);
+        if(!File.Exists(newSettingsDbPath))
+        {
+            CopySummonDbToPersistentPath(originalSettingsDbPath, newSettingsDbPath);
+        }
 
     }
 
