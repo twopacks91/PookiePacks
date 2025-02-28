@@ -12,6 +12,7 @@ public class PlayerData
 
     private string mUsername;
     private string mPassword;
+    private Character mEquipped;
     private int mMoney;
 
     private List<Item> mItems;
@@ -92,6 +93,16 @@ public class PlayerData
     public string GetUsername()
     {
         return mUsername;
+    }
+
+    public void SetEquippedCharacter(Character character)
+    {
+        mEquipped = character;
+    }
+
+    public Character GetEquippedCharacter()
+    {
+        return mEquipped;
     }
 
     public void SetPassword(string password)

@@ -32,6 +32,7 @@ public class Character
     public void Equip()
     {
         isEquippedCharacter = true;
+        PlayerData.GetInstance().SetEquippedCharacter(this);
     }
 
     public void Dequip()
