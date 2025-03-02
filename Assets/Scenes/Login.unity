@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 259899878}
   - component: {fileID: 259899877}
   - component: {fileID: 259899876}
+  - component: {fileID: 259899879}
   m_Layer: 5
   m_Name: SubmitButton
   m_TagString: Untagged
@@ -252,6 +253,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259899874}
   m_CullTransparentMesh: 1
+--- !u!114 &259899879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259899874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &514688497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,6 +1461,7 @@ GameObject:
   - component: {fileID: 1318895907}
   - component: {fileID: 1318895906}
   - component: {fileID: 1318895905}
+  - component: {fileID: 1318895908}
   m_Layer: 5
   m_Name: RegisterButton
   m_TagString: Untagged
@@ -1566,6 +1583,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318895903}
   m_CullTransparentMesh: 1
+--- !u!114 &1318895908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318895903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1389705745
 GameObject:
   m_ObjectHideFlags: 0
