@@ -687,6 +687,12 @@ MonoBehaviour:
   AlexaPrefab: {fileID: 189908, guid: f73d68f6d4a59bd46a40d604b7c677cd, type: 3}
   FlamerPrefab: {fileID: 1000013748701514, guid: 1cd82d870e6ee224a859e65f4107da95,
     type: 3}
+  BrawlerinaPrefab: {fileID: 1694388104871626409, guid: 678bf8bc91771fa498236de892b83d1d,
+    type: 3}
+  PengtingPrefab: {fileID: 100000, guid: 28f113bc1593119448bfebc93373c1ad, type: 3}
+  GrindroidPrefab: {fileID: 1765116360898588, guid: bdd91695cfcf4b643963af1fce587ef5,
+    type: 3}
+  BobPrefab: {fileID: 1359247663918080, guid: 5f8511b9bd25448b4a59a7c1bbc0cf98, type: 3}
   HealthBar: {fileID: 1391864973}
 --- !u!4 &608830358
 Transform:

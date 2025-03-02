@@ -10,6 +10,10 @@ public class BattleController : MonoBehaviour
     public GameObject JawskiPrefab;
     public GameObject AlexaPrefab;
     public GameObject FlamerPrefab;
+    public GameObject BrawlerinaPrefab;
+    public GameObject PengtingPrefab;
+    public GameObject GrindroidPrefab;
+    public GameObject BobPrefab;
 
     [SerializeField]
     private HealthBar HealthBar;
@@ -21,13 +25,13 @@ public class BattleController : MonoBehaviour
 
     void LoadScene()
     {
-        //SwitchCharacter("Alexa");
-        SwitchCharacter(PlayerData.GetInstance().GetEquippedCharacter().GetName());
+        SwitchCharacter("Bob");
+        //SwitchCharacter(PlayerData.GetInstance().GetEquippedCharacter().GetName());
 
         //opponent
-        GameObject opponentObject = Instantiate(CrabbyPrefab);
-        OpponentCharacter = opponentObject.GetComponent<Playable_Crabby>();
-        
+        GameObject opponentObject = Instantiate(DemonGirlPrefab);
+        OpponentCharacter = opponentObject.GetComponent<Playable_DemonGirl>();
+
         //Putting a delayed call on this shi makes it work, dk why
         Invoke(nameof(SetOpponentPosition), 0.1f);
         Invoke(nameof(SetHealthBar), 0.1f);
@@ -78,7 +82,26 @@ public class BattleController : MonoBehaviour
             GameObject characterObject = Instantiate(FlamerPrefab);
             CurrentCharacter = characterObject.GetComponent<Playable_Flamer>();
         }
-
+        else if (characterName == "Brawlerina")
+        {
+            GameObject characterObject = Instantiate(BrawlerinaPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Brawlerina>();
+        }
+        else if (characterName == "Pengting")
+        {
+            GameObject characterObject = Instantiate(PengtingPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Pengting>();
+        }
+        else if (characterName == "Grindroid")
+        {
+            GameObject characterObject = Instantiate(GrindroidPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Pengting>();
+        }
+        else if (characterName == "Bob")
+        {
+            GameObject characterObject = Instantiate(BobPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Bob>();
+        }
         // Add more characters as needed by switching their name and adding their prefab
     }
 

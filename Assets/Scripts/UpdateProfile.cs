@@ -1,13 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Security.Permissions;
 using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine.AI;
 using UnityEngine.Networking;
-using UnityEngine.SocialPlatforms.Impl;
+
 
 
 public class Profile : MonoBehaviour
