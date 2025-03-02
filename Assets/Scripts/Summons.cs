@@ -289,7 +289,7 @@ public class Summons : MonoBehaviour
         statList.Add($"HP: {statData[0]}");
         statList.Add($"ATTACK: {statData[1]}");
         statList.Add($"DEFENCE: {statData[2]}");
-        Character newChar = new Character(characterImageName, characterName, statList);
+        Character newChar = new Character(characterImageName, characterName, statList, int.Parse(statData[0]), int.Parse(statData[1]), int.Parse(statData[2]));
 
         // Get current player data and insert new character into their inventory
         PlayerData currentPlayer = PlayerData.GetInstance();
@@ -308,6 +308,7 @@ public class Summons : MonoBehaviour
         // Get this character's stats from database
         //string oldDatabaseFile = Path.Combine(Application.dataPath, "Databases", "CharacterTableDraft1.csv");
         string databaseFile = Path.Combine(Application.persistentDataPath, "CharacterTableDraft1.csv");
+        Debug.Log(databaseFile);
         if (!File.Exists(databaseFile))
         {
             // Mark text as NA for not available and return early

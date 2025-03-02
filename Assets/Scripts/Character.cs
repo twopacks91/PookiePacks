@@ -14,7 +14,7 @@ public class Character
     private List<Item> equippedItems;
     private bool isEquippedCharacter;
 
-    public Character(string image, string name, List<string> attributes)
+    public Character(string image, string name, List<string> attributes, int hp, int atk, int def )
     {
         this.itemImage = image;
         this.itemName = name;
@@ -22,6 +22,9 @@ public class Character
         this.rarity = image.Split('_')[0];
         this.equippedItems = new List<Item>(0);
         this.isEquippedCharacter = false;
+        this.HP = hp;
+        this.defence = def;
+        this.attack = atk;
     }
 
     public bool IsEquipped()
@@ -57,6 +60,21 @@ public class Character
     public List<string> GetAttributes()
     {
         return itemAttributes;
+    }
+
+    public int GetHP()
+    {
+        return HP;
+    }
+
+    public int GetAttack()
+    {
+        return attack;
+    }
+
+    public int GetDefence()
+    {
+        return defence;
     }
 
     public List<Item> GetEquippedItems()

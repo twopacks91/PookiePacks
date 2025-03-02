@@ -236,6 +236,45 @@ public class PlayerData
             }
         }
 
+
+
+    }
+
+    public static List<int> GetCharacterStats(string characterName)
+    {
+        // Get this character's stats from database
+        //string oldDatabaseFile = Path.Combine(Application.dataPath, "Databases", "CharacterTableDraft1.csv");
+        string databaseFile = Path.Combine(Application.persistentDataPath, "CharacterTableDraft1.csv");
+        if (!File.Exists(databaseFile))
+        {
+            // Mark text as NA for not available and return early
+            Debug.LogError($"Error: Character database file not found at {databaseFile}");
+            return new List<int> { 0, 0, 0 };
+        }
+        string[] database = File.ReadAllLines(databaseFile);
+
+        // Ignore line 1 in database, it's just headings
+        // Find this character and thier details in database
+        string[] characterData = { };
+        for (int i = 1; i < database.Length; i++)
+        {
+            string[] data = database[i].Split(',');
+            if (data[1] == characterName)
+            {
+                characterData = data;
+                break;
+            }
+        }
+
+        // Ensure character was found in database, otherwise log error and set stat values to NA for "Not available"
+        if (characterData.Length == 0)
+        {
+            Debug.LogError($"Error: Character not found in database, name is {characterName}");
+            return new List<int> { 0, 0, 0 }; ;
+        }
+
+
+        return new List<int> { int.Parse(characterData[3]), int.Parse(characterData[4]), int.Parse(characterData[5]) };
     }
 
 }

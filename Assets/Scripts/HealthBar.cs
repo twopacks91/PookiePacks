@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
-        SetHealthValues(200, 350);
+        SetHealthValues(100, 101);
     }
 
     private void Update()

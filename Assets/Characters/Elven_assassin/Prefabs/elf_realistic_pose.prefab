@@ -1288,6 +1288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 450320}
   - component: {fileID: 9532778}
+  - component: {fileID: 2787238482428360126}
   m_Layer: 0
   m_Name: elf_realistic_pose
   m_TagString: Untagged
@@ -1334,6 +1335,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2787238482428360126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4389f64b9bf9f1b4ab66f01d10d3936f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &196664
 GameObject:
   m_ObjectHideFlags: 0
