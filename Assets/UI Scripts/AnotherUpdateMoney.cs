@@ -7,16 +7,21 @@ public class AnotherUpdateMoney : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI currencyText;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void UpdateMoneyFunction()
     {
         PlayerData playerData = PlayerData.GetInstance();
         currencyText.text = '$' + playerData.GetMoney().ToString();
     }
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        UpdateMoneyFunction();
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        UpdateMoneyFunction();
     }
 }

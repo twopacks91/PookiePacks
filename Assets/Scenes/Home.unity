@@ -405,12 +405,12 @@ GameObject:
   - component: {fileID: 201584976}
   - component: {fileID: 201584975}
   m_Layer: 5
-  m_Name: BattleSelectioPanel
+  m_Name: BattleSelectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &201584974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2360,6 +2360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 963646231}
   - component: {fileID: 963646230}
+  - component: {fileID: 963646232}
   m_Layer: 0
   m_Name: BattleSelection
   m_TagString: Untagged
@@ -2400,6 +2401,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963646232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963646229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 464f85b7c960bfc4fb4979588e90ce00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currencyText: {fileID: 1473903574}
 --- !u!1 &1060231866
 GameObject:
   m_ObjectHideFlags: 0
@@ -3452,7 +3466,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   givenCanvas: {fileID: 2050982633}
   background: {fileID: 2800000, guid: 713d063658dab384db01d6060cac9712, type: 3}
-  themeExemptions: []
+  themeExemptions:
+  - {fileID: 201584973}
+  - {fileID: 494419965}
+  - {fileID: 80612081}
+  - {fileID: 1884774472}
+  - {fileID: 750059463}
+  - {fileID: 844886828}
+  - {fileID: 524530761}
+  - {fileID: 1473903572}
 --- !u!4 &1875838836
 Transform:
   m_ObjectHideFlags: 0

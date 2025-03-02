@@ -30,7 +30,6 @@ public class BattleSelection : MonoBehaviour
         // Show panel
         equipCharacterText.gameObject.SetActive(false);
         battleSelectionPanel.SetActive(true);
-        battleSelectionPanel.GetComponent<Image>().color = new Color(152f,152f,152f,190f);
         pvpButton.interactable = false;
 
         // Change image background to character equipped
@@ -40,6 +39,7 @@ public class BattleSelection : MonoBehaviour
         {
             // Show to user character is not equipped
             Debug.LogWarning("User has no character equipped!");
+            Debug.LogWarning(equipped);
             sprite = Resources.Load<Sprite>($"Images/Summons/image_not_found");
             equipCharacterText.gameObject.SetActive(true);
 

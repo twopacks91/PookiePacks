@@ -40,7 +40,7 @@ public class PlayerData
         mUsername = username;
         mPassword = password;
         mEquipped = null;
-        mMoney = 10;
+        mMoney = 20;
         mItems = new List<Item>(0);
         mCharacters = new List<Character>(0);
         mDoneMissions = new List<Mission>(0);
@@ -79,6 +79,7 @@ public class PlayerData
                 mSettings.Add(new Setting(id,name,description,false));
             }
         }
+
     }
     // Default constructor - loads player using information stored
     private PlayerData()
@@ -182,6 +183,8 @@ public class PlayerData
         mUsername = data.mUsername;
         mPassword = data.mPassword;
         mItems = data.mItems;
+        mEquipped = data.mEquipped;
+        mMoney = data.mMoney;
         mCharacters = data.mCharacters;
         mToDoMissions = data.mToDoMissions;
         mDoneMissions = data.mDoneMissions;
@@ -236,9 +239,6 @@ public class PlayerData
                 }
             }
         }
-
-
-
     }
 
     public static List<int> GetCharacterStats(string characterName)

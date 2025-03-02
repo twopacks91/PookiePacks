@@ -1,12 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
-using Unity.Collections;
-using UnityEditor.U2D.Animation;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
@@ -14,6 +9,7 @@ using UnityEngine.UI;
 public class Summons : MonoBehaviour
 {
     // *** Variables
+    private const int kSummonCost = 20;
     private const float kAnimationTime = 5.0f;  // animation time in seconds
     private const float kMagicDelay = 1.0f;
     private const float kLightningDelay = 2.0f;
@@ -65,6 +61,9 @@ public class Summons : MonoBehaviour
     private TextMeshProUGUI attackText;
     [SerializeField]
     private TextMeshProUGUI defenceText;
+    [SerializeField]
+    private TextMeshProUGUI insufficientCurrencyText;
+
 
     // Rates Content
     [SerializeField]
@@ -117,11 +116,13 @@ public class Summons : MonoBehaviour
     /// </summary>
     public void StartSummon()
     {
-        // Disable selection & display animation
-        selectionCanvas.gameObject.SetActive(false);
-        animationCanvas.gameObject.SetActive(true);
-
         // Ensure user has enough currency
+        if (!CheckCurrency())
+        {
+            insufficientCurrencyText.gameObject.SetActive(true);
+            Debug.LogWarning("Summon Error - not enough user currency!");
+            return;
+        }
 
         // Database Format (5): ID - Character Name - Character Image Name - Rarity - Rate
         string [] characterData = null;
@@ -130,6 +131,10 @@ public class Summons : MonoBehaviour
             Debug.LogError("Summon Error - failure to generate character!");
             return;
         }
+
+        // Disable selection & display animation
+        selectionCanvas.gameObject.SetActive(false);
+        animationCanvas.gameObject.SetActive(true);
 
         // Play animation based on rarity
         PlayRarityAnimation(characterData[kCharacterRarity]);
@@ -142,11 +147,27 @@ public class Summons : MonoBehaviour
         SaveSummonToInventory(characterData[kCharacterName], characterData[kCharacterImageName], statData);
         Debug.Log("Successfully Saved to Inventory!");
 
-        //// Prepare to show character stats
-        //ShowCharacterStats(characterData[kCharacterName]);
-
         // Show conclusion - this function accounts for animation time
         ShowConclusion(characterData[kCharacterImageName]);
+    }
+
+
+    /// <summary>
+    /// Subtract currency from player cash total
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckCurrency()
+    {
+        // Ensure user has enough currency
+        if (PlayerData.GetInstance().GetMoney() >= kSummonCost)
+        {
+            PlayerData.GetInstance().RemoveMoney(kSummonCost);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
