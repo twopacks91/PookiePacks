@@ -10,8 +10,6 @@ using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 
-// **** REMEMBER - Improve animations for greater rarity of characters eventually
-
 [System.Serializable]
 public class Summons : MonoBehaviour
 {

@@ -39,6 +39,7 @@ public class PlayerData
     {
         mUsername = username;
         mPassword = password;
+        mEquipped = null;
         mMoney = 10;
         mItems = new List<Item>(0);
         mCharacters = new List<Character>(0);
