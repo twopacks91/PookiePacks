@@ -4,8 +4,8 @@ public class Playable_Croc : PlayableCharacter
 {
     protected override void Start()
     {
-        x = -1;
-        Scale = 0.7f;
+        x = -0.5f;
+        Scale = 1f;
 
         base.Start();  // Call the base Start method
 

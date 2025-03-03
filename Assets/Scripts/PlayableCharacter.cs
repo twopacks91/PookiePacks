@@ -53,15 +53,33 @@ public abstract class PlayableCharacter : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, bool penalty)
     {
-        Health -= amount;
+        Debug.Log("Health before: " + Health);
+        if (penalty)
+        {
+            Health -= amount;
+        }
+        else if (!penalty)
+        {
+            Health -= (amount / (1 + (Defence / 105)));
+            Debug.Log("Non Pen Damage: " + (amount / (1 + (Defence / 105))));
+        }
+
+        Debug.Log("Health After: " + Health);
+
         if (Health < 0) Health = 0;
+
     }
 
     public int GetHealth()
     {
         return Health;
+    }
+
+    public int GetDefence()
+    {
+        return Defence;
     }
 }
 

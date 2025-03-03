@@ -26,13 +26,20 @@ public class HealthBar : MonoBehaviour
 
     private void Update()
     {
-        // Update both health bars
-        UpdateHealthBar(HealthBarFill, PlayerHealth, PlayerMaxHealth);
-        UpdateHealthText(PlayerHealthText, PlayerHealth, PlayerMaxHealth);
+        if (BattleController.Instance != null && BattleController.Instance.CurrentCharacter != null && BattleController.Instance.OpponentCharacter != null)
+        {
+            float currentPlayerHealth = BattleController.Instance.CurrentCharacter.GetHealth();
+            
 
-        UpdateHealthBar(HealthBarFill2, OpponentHealth, OpponentMaxHealth);
-        UpdateHealthText(OpponentHealthText, OpponentHealth, OpponentMaxHealth);
+            float currentOpponentHealth = BattleController.Instance.OpponentCharacter.GetHealth();
 
+
+            UpdateHealthBar(HealthBarFill, currentPlayerHealth, PlayerMaxHealth);
+            UpdateHealthText(PlayerHealthText, currentPlayerHealth, PlayerMaxHealth);
+
+            UpdateHealthBar(HealthBarFill2, currentOpponentHealth, OpponentMaxHealth);
+            UpdateHealthText(OpponentHealthText, currentOpponentHealth, OpponentMaxHealth);
+        }
     }
     public void SetHealthValues(float pHealth, float oHealth)
     {
@@ -64,18 +71,9 @@ public class HealthBar : MonoBehaviour
         PlayerHealth = Mathf.Clamp(PlayerHealth - damage, 0f, PlayerMaxHealth);
     }
 
-    public void PlayerHeal(float healAmount)
-    {
-        PlayerHealth = Mathf.Clamp(PlayerHealth + healAmount, 0f, PlayerMaxHealth);
-    }
-
     public void OpponentDamage(float damage)
     {
         OpponentHealth = Mathf.Clamp(OpponentHealth - damage, 0f, OpponentMaxHealth);
     }
 
-    public void OpponentHeal(float healAmount)
-    {
-        OpponentHealth = Mathf.Clamp(OpponentHealth + healAmount, 0f, OpponentMaxHealth);
-    }
 }
