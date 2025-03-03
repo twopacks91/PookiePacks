@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using System.Text.RegularExpressions;
 using System;
+using System.Collections;
+using UnityEngine.Audio;
 
 public class LoginManager : MonoBehaviour
 {
@@ -43,6 +45,7 @@ public class LoginManager : MonoBehaviour
                 player.SetUsername(username);
                 player.SetPassword(password);
                 player.SavePlayer();
+
             }
             catch (NullReferenceException exception)
             {
