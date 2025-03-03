@@ -14,6 +14,13 @@ public class BattleController : MonoBehaviour
     public GameObject PengtingPrefab;
     public GameObject GrindroidPrefab;
     public GameObject BobPrefab;
+    public GameObject HuzzPrefab;
+    public GameObject LesssGoooPrefab;
+    public GameObject MattPrefab;
+    public GameObject WeekdayPrefab;
+    public GameObject FrederickPrefab;
+    public GameObject MaxwellPrefab;
+    public GameObject AntonyPrefab;
 
     [SerializeField]
     private HealthBar HealthBar;
@@ -25,8 +32,8 @@ public class BattleController : MonoBehaviour
 
     void LoadScene()
     {
-        SwitchCharacter("Bob");
-        //SwitchCharacter(PlayerData.GetInstance().GetEquippedCharacter().GetName());
+        //SwitchCharacter("Antony");
+        SwitchCharacter(PlayerData.GetInstance().GetEquippedCharacter().GetName());
 
         //opponent
         GameObject opponentObject = Instantiate(DemonGirlPrefab);
@@ -101,6 +108,41 @@ public class BattleController : MonoBehaviour
         {
             GameObject characterObject = Instantiate(BobPrefab);
             CurrentCharacter = characterObject.GetComponent<Playable_Bob>();
+        }
+        else if (characterName == "Huzz")
+        {
+            GameObject characterObject = Instantiate(HuzzPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Huzz>();
+        }
+        else if (characterName == "Lesss Gooo")
+        {
+            GameObject characterObject = Instantiate(LesssGoooPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Lesssgooo>();
+        }
+        else if (characterName == "Matt")
+        {
+            GameObject characterObject = Instantiate(MattPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Matt>();
+        }
+        else if (characterName == "Weekday Duo")
+        {
+            GameObject characterObject = Instantiate(WeekdayPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Weekday>();
+        }
+        else if (characterName == "Frederick")
+        {
+            GameObject characterObject = Instantiate(FrederickPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Frederick>();
+        }
+        else if (characterName == "Maxwell")
+        {
+            GameObject characterObject = Instantiate(MaxwellPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Maxwell>();
+        }
+        else if (characterName == "Antony")
+        {
+            GameObject characterObject = Instantiate(AntonyPrefab);
+            CurrentCharacter = characterObject.GetComponent<Playable_Antony>();
         }
         // Add more characters as needed by switching their name and adding their prefab
     }

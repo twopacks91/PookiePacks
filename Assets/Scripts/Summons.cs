@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Summons : MonoBehaviour
 {
     // *** Variables
-    private const int kSummonCost = 20;
+    private const int kSummonCost = 0;
     private const float kAnimationTime = 5.0f;  // animation time in seconds
     private const float kMagicDelay = 1.0f;
     private const float kLightningDelay = 2.0f;

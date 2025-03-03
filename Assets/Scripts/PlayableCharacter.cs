@@ -9,7 +9,9 @@ public abstract class PlayableCharacter : MonoBehaviour
     protected int AttackDamage;
     protected int Defence;
     protected float Scale;
-    protected float Rotation = 90;
+    protected float RotationX = 90;
+    protected float RotationY = 0;
+    protected float RotationZ = 0;
     protected float x = 0, y = 0, z = 2.2f;
 
     protected Animator animator;
@@ -22,7 +24,7 @@ public abstract class PlayableCharacter : MonoBehaviour
 
         transform.localScale = new Vector3(Scale, Scale, Scale);
         transform.position = new Vector3(x, y, z);
-        transform.rotation = Quaternion.LookRotation(new Vector3(Rotation, 0, 0));
+        transform.rotation = Quaternion.LookRotation(new Vector3(RotationX, RotationY, RotationZ));
     }
 
     protected void SetStats(List<int> Stats)

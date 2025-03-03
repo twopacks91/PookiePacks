@@ -693,6 +693,20 @@ MonoBehaviour:
   GrindroidPrefab: {fileID: 1765116360898588, guid: bdd91695cfcf4b643963af1fce587ef5,
     type: 3}
   BobPrefab: {fileID: 1359247663918080, guid: 5f8511b9bd25448b4a59a7c1bbc0cf98, type: 3}
+  HuzzPrefab: {fileID: 8298197335228629709, guid: 71e4a08c746249d4b9647c6c9c14792d,
+    type: 3}
+  LesssGoooPrefab: {fileID: 8244404692049599140, guid: d60da88de3d131f44b05afde543857e1,
+    type: 3}
+  MattPrefab: {fileID: 1215991429018465326, guid: 18ff01d8eeb9c6e4fa519253542e3017,
+    type: 3}
+  WeekdayPrefab: {fileID: 2291428606252413016, guid: dacce6edfd6749e438b5c4212b36db3a,
+    type: 3}
+  FrederickPrefab: {fileID: 8432493066894661782, guid: be3fb33c1f71067459646bd68486e167,
+    type: 3}
+  MaxwellPrefab: {fileID: 1908888856953719909, guid: 7c772eabf798347439dbed2032f318e5,
+    type: 3}
+  AntonyPrefab: {fileID: 3089719583960084375, guid: 114f35f55ebcd54469591835fe53e36a,
+    type: 3}
   HealthBar: {fileID: 1391864973}
 --- !u!4 &608830358
 Transform:

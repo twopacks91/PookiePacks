@@ -6,7 +6,7 @@ public class Playable_Pengting : PlayableCharacter
     {
         x = -0.5f;
         Scale = 0.1f;
-        Rotation = 180;
+        RotationX = 180;
 
         base.Start();  // Call the base Start method
 
