@@ -215,40 +215,47 @@ public class LoadMissions : MonoBehaviour
 
     void UpdateMissionProgress()
     {
-        foreach(Mission mission in playerDataCopy.GetToDoMissions())
+        LocationManager locMan = this.AddComponent<LocationManager>();
+        foreach (Mission mission in playerDataCopy.GetToDoMissions())
         {
             switch(mission.id)
             {
                 case 0:
                     // Go to uclan
-                    LocationManager locMan = this.AddComponent<LocationManager>();
-                    long timeSinceProgress = GetUnixTimestamp() - mission.timeLastProgressMade;
+                    
+                    long timeSince0Progress = GetUnixTimestamp() - mission.timeLastProgressMade;
                     // 86400 is seconds in a day so user can only make progress on this mission once per day
-                    if(locMan.IsUserAtUClan() && mission.progress < mission.needed && timeSinceProgress<=86400)
+                    if(locMan.GetDistanceToStudentCenter()<40 && mission.progress < mission.needed && timeSince0Progress>30)
                     {
+                        mission.timeLastProgressMade = GetUnixTimestamp();
                         mission.progress += 1;
                     }
                     break;
                 case 1:
                     // Win battles, idk how i am implementing this yet
                     break;
-                case 2:
-                    // open packs
-                    break;
-                case 3:
-                    // Block attacks, need connor to work before I can do this
-                    break;
                 case 4:
-                    // Pack phaval
+                    // Pack antony
                     // Some beautiful, readable code here
-                    // Just checks to see if phaval is in the users inventory and the mission isnt already complete
-                    if(playerDataCopy.GetCharacters().Select(m => m.GetName().ToLower()).Contains("phaval") && mission.progress < mission.needed)
+                    // Just checks to see if antony is in the users inventory and the mission isnt already complete
+                    if(playerDataCopy.GetCharacters().Select(m => m.GetName().ToLower()).Contains("antony") && mission.progress < mission.needed)
                     {
+                        mission.progress += 1;
+                    }
+                    break;
+                case 6:
+                    // Go to uclan
+                    long timeSince6Progress = GetUnixTimestamp() - mission.timeLastProgressMade;
+                    // 86400 is seconds in a day so user can only make progress on this mission once per day
+                    if (locMan.GetDistanceToLibrary() < 40 && mission.progress < mission.needed && timeSince6Progress > 30)
+                    {
+                        mission.timeLastProgressMade = GetUnixTimestamp();
                         mission.progress += 1;
                     }
                     break;
 
             }
         }
+        playerDataCopy.SavePlayer();
     }
 }

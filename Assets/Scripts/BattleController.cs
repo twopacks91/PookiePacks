@@ -180,6 +180,14 @@ public class BattleController : MonoBehaviour
 
         else if (PlayerAction == Action.Parry && OpponentAction == Action.Strike)
         {
+            foreach (Mission mission in PlayerData.GetInstance().GetToDoMissions())
+            {
+                if (mission.id == 3 && mission.progress < mission.needed)
+                {
+                    mission.progress++;
+                    PlayerData.GetInstance().SavePlayer();
+                }
+            }
             OpponentCharacter.TakeDamage(PlayerDamage, OpponentParryPenalty);
         }
         else if (PlayerAction == Action.Parry && OpponentAction == Action.Feint)
@@ -245,6 +253,15 @@ public class BattleController : MonoBehaviour
         else if (OpponentCharacter.GetHealth() <= 0)
         {
             Debug.Log("Player Wins!");
+            foreach(Mission mission in PlayerData.GetInstance().GetToDoMissions())
+            {
+                if(mission.id==1 && mission.progress<mission.needed)
+                {
+                    mission.progress++;
+                    PlayerData.GetInstance().SavePlayer();
+                }
+            }
+
             OutcomeText.text = "YOU WIN!";
             OutcomeText.gameObject.SetActive(true);
 

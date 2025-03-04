@@ -15,17 +15,17 @@ public class LocationDebugging : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        LocationManager locationManager = this.transform.AddComponent<LocationManager>();
-        bool isAtUni = locationManager.IsUserAtUClan();
-        Debug.Log("At uni:" + isAtUni.ToString());
-        if(isAtUni)
-        {
-            textBox.text = "You are at UCLan, heres 500 dollar!";
-        }
-        else
-        {
-            textBox.text = "You either arent at uclan or my code is shit";
-        }
+        //LocationManager locationManager = this.transform.AddComponent<LocationManager>();
+        //bool isAtUni = locationManager.IsUserAtUClan() < 200;
+        //Debug.Log("At uni:" + isAtUni.ToString());
+        //if(isAtUni)
+        //{
+        //    textBox.text = "You are at UCLan, heres 500 dollar!";
+        //}
+        //else
+        //{
+        //    textBox.text = "You either arent at uclan or my code is shit";
+        //}
         
     }
 

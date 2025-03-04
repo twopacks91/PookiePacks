@@ -124,6 +124,16 @@ public class Summons : MonoBehaviour
             return;
         }
 
+        // Update mission
+        foreach(Mission mission in PlayerData.GetInstance().GetToDoMissions())
+        {
+            if(mission.id==2 && mission.progress<mission.needed)
+            {
+                mission.progress++;
+                PlayerData.GetInstance().SavePlayer();
+            }
+        }
+
         // Database Format (5): ID - Character Name - Character Image Name - Rarity - Rate
         string [] characterData = null;
         if(!GenerateCharacter(ref characterData))

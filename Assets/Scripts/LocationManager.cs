@@ -9,9 +9,13 @@ public class LocationManager : MonoBehaviour
     private float lat;
     private float lon;
     private const int serviceStartWait = 20; // Time to wait for location services to start on phone
-    private const float UniLat = 53.762787f;
-    private const float UniLon = -2.707331f;
-    private const float UniRadius = 400.0f; // In meters
+    private const float StudentLat = 53.7628944f;
+    private const float StudentLon = -2.7073222f;
+    private const float StudentRadius = 40.0f; // In meters
+    //53.7628944,-2.7073222
+    private const float LibraryLat = 53.763814f;
+    private const float LibraryLon = -2.7073843f;
+    private const float LibraryRadius = 40.0f; // In meters
 
     public LocationManager()
     {
@@ -78,7 +82,7 @@ public class LocationManager : MonoBehaviour
         Input.location.Stop();
     }
 
-    public bool IsUserAtUClan()
+    public float GetDistanceToStudentCenter()
     {
         StartCoroutine(UpdateLocation());
         // Distance to UClan student centre 
@@ -86,19 +90,28 @@ public class LocationManager : MonoBehaviour
         float metersPerDegreeLat = 111320.0f;
         float metersPerDegreeLon = metersPerDegreeLat * Mathf.Cos(Mathf.Deg2Rad * this.lat);
 
-        float diffLat = (UniLat - this.lat) * metersPerDegreeLat;
-        float diffLon = (UniLon - this.lon) * metersPerDegreeLon;
+        float diffLat = (StudentLat - this.lat) * metersPerDegreeLat;
+        float diffLon = (StudentLon - this.lon) * metersPerDegreeLon;
 
         float distanceToUni = Mathf.Sqrt(Mathf.Pow(diffLat, 2) + Mathf.Pow(diffLon, 2));
         Debug.Log("distance from uni:" + distanceToUni.ToString());
-
-        if (distanceToUni >= UniRadius)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return distanceToUni;
     }
+    
+    public float GetDistanceToLibrary()
+    {
+        StartCoroutine(UpdateLocation());
+
+        // Calculated assuming flat earth (which we all know is true)
+        float metersPerDegreeLat = 111320.0f;
+        float metersPerDegreeLon = metersPerDegreeLat * Mathf.Cos(Mathf.Deg2Rad * this.lat);
+
+        float diffLat = (LibraryLat - this.lat) * metersPerDegreeLat;
+        float diffLon = (LibraryLon - this.lon) * metersPerDegreeLon;
+
+        float distanceToUni = Mathf.Sqrt(Mathf.Pow(diffLat, 2) + Mathf.Pow(diffLon, 2));
+        Debug.Log("distance from student center:" + distanceToUni.ToString());
+        return distanceToUni;
+    }
+
 }
