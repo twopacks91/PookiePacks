@@ -1,16 +1,16 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
-public class PlayerStats
+public class PlayerStats : MonoBehaviour
 {
-    private int HP;
-    private int attack;
-    private int defence;
-
+    TextMeshProUGUI stats;
     private Character character;
 
     void Start()
     {
+        stats = this.GetComponent<TextMeshProUGUI>();
+
         // Retrieve the equipped character from PlayerData
         character = PlayerData.GetInstance().GetEquippedCharacter();
 
@@ -20,8 +20,6 @@ public class PlayerStats
 
     void DisplayCharacterStats()
     {
-        attackText.text = $"Attack: {character.GetAttack()}";
-        defenceText.text = $"Defence: {character.GetDefence()}";
-        hpText.text = $"HP: {character.GetHP()}";
+        stats.text = $"Attack: {character.GetAttack()} Defence: {character.GetDefence()} HP: {character.GetHP()}";
     }
 }

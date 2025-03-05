@@ -8,7 +8,7 @@ public class ProfileMoney : MonoBehaviour
     {
         PlayerData playerData = PlayerData.GetInstance();
         TextMeshProUGUI text = this.GetComponent<TextMeshProUGUI>();
-        text.text = "Currency: $" + playerData.GetCurrency();
+        text.text = "Currency: $" + playerData.GetMoney();
         
     }
 
